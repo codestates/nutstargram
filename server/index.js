@@ -4,12 +4,13 @@ const https = require('https');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+
 const app = express();
 const router = express.Router();
 
 const controllers = require('./controllers');
 
-//express.urlencoded는 bodyParser 미들웨어의 여러 옵션 중에 하나로 false 값일 시 node.js에 기본으로 내장된 queryString, true 값일 시 따로 설치가 필요한 npm qs 라이브러리를 사용한다.
+// express.urlencoded는 bodyParser 미들웨어의 여러 옵션 중에 하나로 false 값일 시 node.js에 기본으로 내장된 queryString, true 값일 시 따로 설치가 필요한 npm qs 라이브러리를 사용한다.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -19,6 +20,10 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   }),
 );
+app.get('/', (req, res) => {
+  res.status(201).send('Hello World');
+});
+
 app.use(cookieParser());
 app.patch('/editdiary', controllers.editdiary);
 app.post('/write', controllers.write);
