@@ -1,28 +1,30 @@
 import React from 'react';
+import styled from 'styled-components';
+import {useState} from 'react';
 
-// const Modal = props => {
-//   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-//   const { open, close, header } = props;
+// export const Modal = styled.div.attrs(props => {
 
-//   return (
-//     // 모달이 열릴때 openModal 클래스가 생성된다.
-//     <div className={open ? 'openModal modal' : 'modal'}>
-//       {open ? (
-//         <section>
-//           <header>
-//             {header}
-//             <button className="close" onClick={close}>
-//               &times;
-//             </button>
-//           </header>
-//           <main>{props.children}</main>
-//           <footer>
-//             <button className="close" onClick={close}>
-//               close
-//             </button>
-//           </footer>
-//         </section>
-//       ) : null}
-//     </div>
-//   );
-// };
+//     role: 'modal'
+
+    
+
+// })`
+
+
+//     background: white;
+//     border-radius: 30px;
+//     font-size: 2em;
+//     width: 100px;
+//     height: 80px; 
+
+//     >.div.yes_btn {
+//         margin-bottom: 5px;
+//         cursor: pointer;
+//     }
+
+// `
+
+// export const Modal = () => {
+//     const [isClicked, setIsClicked] = useState(false);
+    
+// }
