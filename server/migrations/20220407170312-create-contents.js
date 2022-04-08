@@ -15,6 +15,12 @@ module.exports = {
       content_text: {
         type: Sequelize.STRING,
       },
+      content_emoji: {
+        type: Sequelize.STRING,
+      },
+      content_weather: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
