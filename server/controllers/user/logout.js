@@ -1,3 +1,6 @@
 module.exports = (req, res) => {
-  res.status(500);
+  if (req.url === '/logout') {
+    return res.status(201).send({ message: 'ok' });
+  }
+  res.status(500).send({ message: 'err' });
 };

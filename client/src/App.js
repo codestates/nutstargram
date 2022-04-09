@@ -1,16 +1,47 @@
+import React, { useEffect, useState } from 'react';
+import { Switch, Route, useNavigate, Redirect } from 'react-router-dom';
 import './App.css';
-import { React } from 'react';
-import { Route } from 'react-router-dom';
-import NavBar from './Components/Nav';
+import axios from 'axios';
 import Main from './Pages/Main';
+import NavBar from './Components/Nav';
+import Modal from './Components/Modals/Modal';
 
-const App = () => {
+axios.defaults.withCredentials = true;
+// import logo from './logo.svg';
+
+function App() {
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  // const [modalOpen, setModalOpen] = useState(false);
+
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  // };
+  const handleLogout = () => {
+    axios({
+      method: 'post',
+      url: 'https://localhost:4000/logout',
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    })
+      .then(() => {
+        navigate('/');
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
-    <div>
-      <Route exact={true} path="/" component={Main} />
-      <Route path="/nav" component={NavBar} />
+    <div className="App">
+      <div>
+        <NavBar />
+        <Main handleLogout={handleLogout} />
+      </div>
     </div>
   );
-};
+}
 
 export default App;

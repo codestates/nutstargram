@@ -1,12 +1,15 @@
 import React from 'react';
+import axios from 'axios';
 
-const Main = () => {
+axios.defaults.withCredentials = true;
+// eslint-disable-next-line react/prop-types
+const MainPage = ({ handleLogout }) => {
   return (
     <div>
-      <h1>메인페이지</h1>
-      <p>가장 먼저 보여지는 페이지입니다.</p>
+      <div>메인 페이지</div>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
 
-export default Main;
+export default MainPage;
