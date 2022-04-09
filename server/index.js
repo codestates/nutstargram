@@ -20,6 +20,10 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   }),
 );
+app.get('/', (req, res) => {
+  res.status(201).send('Hello World');
+});
+
 app.use(cookieParser());
 app.patch('/editdiary', controllers.editdiary);
 app.post('/write', controllers.write);
