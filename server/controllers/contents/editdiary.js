@@ -1,3 +1,3 @@
 module.exports = (req, res) => {
-  res.status(500);
+  res.status(400);
 };
