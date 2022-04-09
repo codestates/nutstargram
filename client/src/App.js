@@ -1,28 +1,16 @@
 import './App.css';
-import React from 'react';
+import { React } from 'react';
+import { Route } from 'react-router-dom';
 import NavBar from './Components/Nav';
-import Modal from './Components/Modals/Modal';
-import Signup from './Pages/Signup';
-// import logo from './logo.svg';
+import Main from './Pages/Main';
 
-function App() {
-  // const [modalOpen, setModalOpen] = useState(false);
-
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
-
+const App = () => {
   return (
-    <div className="App">
-      <div>
-        <NavBar />
-      </div>
+    <div>
+      <Route exact={true} path="/" component={Main} />
+      <Route path="/nav" component={NavBar} />
     </div>
   );
-}
+};
 
 export default App;
