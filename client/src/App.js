@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import NavBar from './Components/Nav';
 import Modal from './Components/Modals/Modal';
+import Signup from './Pages/Signup';
 // import logo from './logo.svg';
 
 function App() {

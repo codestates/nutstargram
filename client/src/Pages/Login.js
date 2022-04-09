@@ -1,6 +1,7 @@
-import React from 'react';
+import { React, Link, Routes, Route, Switch } from 'react';
 import styled from 'styled-components';
 import logo from '../peanuts.png';
+import Signup from './Signup';
 
 const style1 = {
   height: '100px',
@@ -16,6 +17,7 @@ const LoginPage = () => {
         className="userEmail"
         placeHolder="please write your email"
       ></input>
+      <br />
     </div>
   );
 };
