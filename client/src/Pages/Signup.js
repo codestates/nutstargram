@@ -1,4 +1,5 @@
 import { Fragment, React } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 
 const SignUpPage = () => {
   return (
@@ -8,21 +9,23 @@ const SignUpPage = () => {
       => textarea
       => 하지만 input type text 가 회원 관리단에는 예쁠듯(한줄뿐이니까)
       => textarea는 2줄 이상시 유효 */}
-      <input type="text" placeHolder="User Name"></input>
+      <input type="text" placeholder="User Name"></input>
       <br />
-      <input type="text" placeHolder="Email"></input>
+      <input type="text" placeholder="Email"></input>
       <br />
       <button>Email Confirm</button>
       <br />
-      <input type="text" placeHolder="Mobile"></input>
+      <input type="text" placeholder="Mobile"></input>
       <br />
-      <input type="text" placeHolder="Password"></input>
+      <input type="text" placeholder="Password"></input>
       <br />
-      <input type="text" placeHolder="Confirm Password"></input>
+      <input type="text" placeholder="Confirm Password"></input>
       <br />
-      <button>SignUp</button>
+      <Link to="/">
+        <button>SignUp 허락한다</button>
+      </Link>
     </Fragment>
   );
 };
 
-export default SignUpPage;
+export default SignUpPage();

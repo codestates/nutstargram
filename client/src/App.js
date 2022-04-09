@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Switch, Route, useNavigate, Redirect } from 'react-router-dom';
 import './App.css';
-import axios from 'axios';
-import Main from './Pages/Main';
+import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import NavBar from './Components/Nav';
-import Modal from './Components/Modals/Modal';
-
-axios.defaults.withCredentials = true;
+import Login from './Pages/Login';
+import Signup from './Pages/Signup';
+import Main from './Pages/Main';
 // import logo from './logo.svg';
 
 function App() {
-  const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
   // const [modalOpen, setModalOpen] = useState(false);
 
   // const openModal = () => {
@@ -21,25 +17,16 @@ function App() {
   // const closeModal = () => {
   //   setModalOpen(false);
   // };
-  const handleLogout = () => {
-    axios({
-      method: 'post',
-      url: 'https://localhost:4000/logout',
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    })
-      .then(() => {
-        navigate('/');
-      })
-      .catch(err => console.log(err));
-  };
 
   return (
     <div className="App">
-      <div>
-        <NavBar />
-        <Main handleLogout={handleLogout} />
-      </div>
+      <Routes>
+        <Route path="/" element={Login} />
+        <Route path="/signup" element={Signup} />
+      </Routes>
+
+      <div>{/* <NavBar /> */}</div>
+      {/* NavBar는 일단 죽여놨습니다. 로그인 주고받고 & 상태 받아 올 때까지 */}
     </div>
   );
 }
