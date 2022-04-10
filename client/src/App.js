@@ -18,6 +18,23 @@ function App() {
   //   setModalOpen(false);
   // };
 
+
+  const handleLogout = () => {
+    navigate('/login');
+    // axios({
+    //   method: 'post',
+    //   url: 'https://localhost:4000/logout',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   withCredentials: true,
+    // })
+    //   .then(() => {
+    //     navigate('/');
+    //   })
+    //   .catch(err => console.log(err));
+    // console.log('성공');
+  };
+
+
   return (
     <div className="App">
       <Routes>

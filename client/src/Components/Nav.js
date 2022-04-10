@@ -8,7 +8,7 @@ import Login from '../Pages/Login';
 const NavBar = () => {
   return (
     <div>
-      개발자님, 안녕하세요.
+      개발자님, 안녕하세요. 안녕 못합니다...
       <br />
       <Link to="/login">
         <button type="button">Login</button>

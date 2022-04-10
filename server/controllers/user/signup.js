@@ -1,7 +1,8 @@
-const { user } = require('../../models');
+const { users } = require('../../models');
 const { generateAccessToken } = require('../tokenFunctions');
 
 module.exports = async (req, res) => {
+  // console.log('dddddddddd');
   try {
     // 전달받은 유저 정보
     const { username, password, mobile, email } = req.body;
@@ -10,7 +11,7 @@ module.exports = async (req, res) => {
       return res.status(400).send('insufficient parameters');
     } else {
       // 다 충족한 경우
-      await user
+      await users
         .findOrCreate({
           // findOrCreate 사용
           where: { email: email }, // 해당 유저 이메일과 일치하는 정보 찾기
@@ -42,3 +43,6 @@ module.exports = async (req, res) => {
     return res.status(500).send('err');
   }
 };
+// module.exports = (req, res) => {
+//   console.log('aaaaaa', req.body);
+// };
