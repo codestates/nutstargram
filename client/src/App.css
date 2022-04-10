@@ -36,13 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.Nav {
-  color: orange;
-  background-color: gray;
-}
-
-.Main {
-  color: pink;
-  background-color: gray;
-}

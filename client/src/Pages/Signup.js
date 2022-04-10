@@ -1,31 +1,163 @@
-import { Fragment, React } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { Fragment, useState, useEffect } from 'react';
+import '../Styles/signup.css';
+import axios from 'axios';
 
 const SignUpPage = () => {
+  const [inputValue, setInputValue] = useState({
+    userName: '',
+    email: '',
+    mobile: '',
+    password: '',
+    confirmPassword: '',
+  });
+  // 값 상태 저장
+  const [emailMessage, setEmailMessage] = useState(
+    `Email은 '@'와 '.'이 필요합니다`,
+  );
+
+  const [passwordMessage, setPasswordMessage] = useState(
+    `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다`,
+  );
+  const [confirmPasswordMessage, setConfirmPasswordMessage] =
+    useState(`비밀번호가 일치하지 않습니다`);
+  // 입력규칙 오류메시지 저장
+
+  const { userName, email, mobile, password, confirmPassword } = inputValue;
+
+  const isValidEmail = email.includes('@') && email.includes('.');
+  // email 검사 : @ 와 . 포함 될 것
+  const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+  // 비밀번호 특수문자 확인을 위한 정규식 표현
+  const isValidPassword = password.length >= 8 && specialLetter >= 1;
+  // 특수문자 1자 이상, 전체 8자 이상
+  const isValidConfirmPassword =
+    confirmPassword === password &&
+    confirmPassword.length !== 0 &&
+    password.length !== 0;
+  // 비밀번호 확인값도 같은지 확인
+  const isValidInput =
+    userName.length >= 1 &&
+    email.length >= 1 &&
+    mobile.length >= 1 &&
+    password.length >= 1 &&
+    confirmPassword.length >= 1;
+  // 모든 칸에 한자 이상 적었을 때
+  const getIsActive =
+    isValidEmail &&
+    isValidPassword &&
+    isValidInput &&
+    isValidConfirmPassword === true;
+  // 검사한 모든 로직이 true 일때, 버튼을 활성화 시킬 것
+
+  const handleInput = event => {
+    const { name, value } = event.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+    // 값이 저장되는 로직
+
+    if (isValidEmail) {
+      setEmailMessage('올바른 이메일 입니다');
+    } else {
+      setEmailMessage(`Email은 '@'와 '.'이 필요합니다`);
+    }
+
+    if (isValidPassword) {
+      setPasswordMessage(`올바른 비밀번호 입니다`);
+    } else {
+      setPasswordMessage(
+        `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다`,
+      );
+    }
+
+    if (isValidConfirmPassword) {
+      setConfirmPasswordMessage(`비밀번호 확인 되었습니다`);
+    } else {
+      setConfirmPasswordMessage(`비밀번호가 일치하지 않습니다`);
+    }
+  };
+
+  const handleButtonValid = () => {
+    if (!isValidInput) {
+      alert('빈칸을 채워주세요');
+    } else if (!isValidEmail) {
+      alert('email에는 @와 . 이 포함되어야 합니다.');
+    } else if (!isValidPassword) {
+      alert(
+        '비밀번호는 8자리 이상이어야 하고 특수문자 1자 이상 포함되어야 합니다.',
+      );
+    } else if (!isValidConfirmPassword) {
+      alert('비밀번호가 서로 같은지 확인해주세요');
+    } else {
+      // post 요청
+      axios
+        .post('http://localhost:3000/signup', {
+          userName: userName,
+          email: email,
+          mobile: mobile,
+          password: password,
+        })
+        .then(response => {
+          console.log(response.data);
+        });
+    }
+  };
+  // 조건 중 하나라도 만족하지 못할 때 버튼 누르면 알림창
+
   return (
     <Fragment>
-      <div>회원가입</div>
-      {/* input type text 보다는 한줄 코드 스타일링을 권장 
-      => textarea
-      => 하지만 input type text 가 회원 관리단에는 예쁠듯(한줄뿐이니까)
-      => textarea는 2줄 이상시 유효 */}
-      <input type="text" placeholder="User Name"></input>
-      <br />
-      <input type="text" placeholder="Email"></input>
-      <br />
-      <button>Email Confirm</button>
-      <br />
-      <input type="text" placeholder="Mobile"></input>
-      <br />
-      <input type="text" placeholder="Password"></input>
-      <br />
-      <input type="text" placeholder="Confirm Password"></input>
-      <br />
-      <Link to="/">
-        <button>SignUp 허락한다</button>
-      </Link>
+      <h1>회원가입 페이지 입니다</h1>
+      {/* input type text or textarea */}
+      <form className="signUpInput">
+        <div className="inputMessage">User Name *</div>
+        <input name="userName" onChange={handleInput}></input>
+        <br />
+        <div className="inputMessage">Email *</div>
+        <input name="email" onChange={handleInput}></input>
+        <br />
+        <div
+          onChange={handleInput}
+          className={isValidEmail ? 'successMessage' : 'failMessage'}
+        >
+          {emailMessage}
+        </div>
+        <br />
+        <button>Email Confirm</button>
+        <br />
+        <div className="inputMessage">Mobile *</div>
+        <input name="mobile" onChange={handleInput}></input>
+        <br />
+        <div className="inputMessage">Password *</div>
+        <input name="password" onChange={handleInput}></input>
+        <br />
+        <div
+          onChange={handleInput}
+          className={isValidPassword ? 'successMessage' : 'failMessage'}
+        >
+          {passwordMessage}
+        </div>
+        <br />
+        <div className="inputMessage">Confirm Password *</div>
+        <input name="confirmPassword" onChange={handleInput}></input>
+        <br />
+        <div
+          onChange={handleInput}
+          className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
+        >
+          {confirmPasswordMessage}
+        </div>
+        <br />
+      </form>
+      <button
+        className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
+        type="button"
+        onClick={handleButtonValid}
+      >
+        CREATE USER ACCOUNT
+      </button>
     </Fragment>
   );
 };
 
-export default SignUpPage();
+export default SignUpPage;
