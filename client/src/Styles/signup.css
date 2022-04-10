@@ -1,0 +1,14 @@
+.signUpButtonAction {
+  color: green
+}
+
+.signUpButtonInaction { 
+  color: red;
+}
+
+.successMessage {
+  color: grey;
+}
+.failMessage {
+  color: red;
+}
