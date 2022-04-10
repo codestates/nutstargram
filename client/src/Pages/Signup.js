@@ -18,7 +18,7 @@ const SignUpPage = () => {
   );
 
   const [passwordMessage, setPasswordMessage] = useState(
-    `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다`,
+    `비밀번호는 숫자8자리 이상이어야 합니다`,
   );
   const [confirmPasswordMessage, setConfirmPasswordMessage] =
     useState(`비밀번호가 일치하지 않습니다`);
@@ -30,7 +30,8 @@ const SignUpPage = () => {
   // email 검사 : @ 와 . 포함 될 것
   const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
   // 비밀번호 특수문자 확인을 위한 정규식 표현
-  const isValidPassword = password.length >= 8 && specialLetter >= 1;
+  const isValidPassword = password.length >= 8;
+  // && specialLetter >= 1;
   // 특수문자 1자 이상, 전체 8자 이상
   const isValidConfirmPassword =
     confirmpassword === password &&
@@ -67,33 +68,55 @@ const SignUpPage = () => {
     }
 
     if (isValidPassword) {
-      setPasswordMessage(`올바른 비밀번호 입니다`);
+      setPasswordMessage('올바른 비밀번호 입니다');
     } else {
-      setPasswordMessage(
-        `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다`,
-      );
+      setPasswordMessage('비밀번호는 숫자 8자 이상으로 작성해 주셔야 합니다');
     }
 
     if (isValidConfirmPassword) {
-      setConfirmPasswordMessage(`비밀번호 확인 되었습니다`);
+      setConfirmPasswordMessage('비밀번호 확인 되었습니다');
     } else {
-      setConfirmPasswordMessage(`비밀번호가 일치하지 않습니다`);
+      setConfirmPasswordMessage('비밀번호가 일치하지 않습니다');
     }
   };
 
   const handleButtonValid = () => {
-    // if (!isValidInput) {
-    //   alert('빈칸을 채워주세요');
-    // } else if (!isValidEmail) {
-    //   alert('email에는 @와 . 이 포함되어야 합니다.');
-    // } else if (!isValidPassword) {
-    //   alert(
-    //     '비밀번호는 8자리 이상이어야 하고 특수문자 1자 이상 포함되어야 합니다.',
-    //   );
-    // } else if (!isValidConfirmPassword) {
-    //   alert('비밀번호가 서로 같은지 확인해주세요');
-    // } else {
-    // post 요청
+    if (!isValidInput) {
+      alert('빈칸을 채워주세요');
+    } else if (!isValidEmail) {
+      alert('email에는 @와 . 이 포함되어야 합니다');
+    } else if (!isValidPassword) {
+      alert('비밀번호는 숫자8자리 이상이어야 합니다');
+    } else if (!isValidConfirmPassword) {
+      alert('비밀번호가 서로 같은지 확인해주세요');
+    } else {
+      // post 요청
+      const data = {
+        username: username,
+        password: password,
+        mobile: mobile,
+        email: email,
+      };
+
+      axios({
+        method: 'post',
+        url: 'http://localhost:4000/signup',
+        data: data,
+        headers: {
+          'Content-Type': `application/json`,
+        },
+      })
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
+  // email 유효성 검사 함수
+  const handleValidEmail = () => {
     const data = {
       username: username,
       password: password,
@@ -102,21 +125,24 @@ const SignUpPage = () => {
     };
 
     axios({
-      url: 'http://localhost:4000/signup',
       method: 'post',
-      data: JSON.stringify(data),
+      url: 'http://localhost:4000/signup',
+      data: data,
       headers: {
         'Content-Type': `application/json`,
       },
     })
-      .then(response => {
-        console.log('sendOK', response.data);
+      .then(res => {
+        console.log(res.data);
       })
-      .catch(() => {
-        console.log('Error!');
+      .catch(err => {
+        console.log(err.message);
+        console.log(err.status);
+        if (err.message === 'Request failed with status code 409') {
+          alert('이미 존재하는 email 입니다');
+        }
       });
   };
-  // 조건 중 하나라도 만족하지 못할 때 버튼 누르면 알림창
 
   return (
     <Fragment>
@@ -136,7 +162,9 @@ const SignUpPage = () => {
           {emailMessage}
         </div>
         <br />
-        <button>Email Confirm</button>
+        <button type="button" onClick={handleValidEmail}>
+          Email Confirm
+        </button>
         <br />
         <div className="inputMessage">Mobile *</div>
         <input name="mobile" onChange={handleInput}></input>
