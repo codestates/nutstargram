@@ -1,8 +1,10 @@
 import './App.css';
 import React from 'react';
-import NavBar from './Components/Nav';
-import Modal from './Components/Modals/Modal';
-// import logo from './logo.svg';
+import { Routes, Route, Link } from 'react-router-dom';
+import Login from './Pages/Login';
+import Signup from './Pages/Signup';
+import Main from './Pages/Main';
+import Write from './Pages/Write';
 
 function App() {
   // const [modalOpen, setModalOpen] = useState(false);
@@ -17,9 +19,13 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <NavBar />
-      </div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/writePage" element={<Write />} />
+      </Routes>
     </div>
   );
 }
