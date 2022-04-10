@@ -1,13 +1,24 @@
-import React from 'react';
-import axios from 'axios';
+import React, { Component, Routes, Route, BrowserRouter } from 'react';
+import styled from 'styled-components';
+import Nav from '../Components/Nav';
 
-axios.defaults.withCredentials = true;
-// eslint-disable-next-line react/prop-types
-const MainPage = ({ handleLogout }) => {
+const MainPage = () => {
+  const postContainer = styled.div`
+    overflow: scroll;
+    width: 10px; /*가로 스크롤 넓이 */
+    height: 10px; /*새로 스크롤 넓이 */
+    border: 1px solid black;
+    border-radius: 6px;
+  `;
   return (
-    <div>
-      <div>메인 페이지</div>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="Main">
+      <Nav />
+      <br />
+      <div>
+        <h1>ㅎㅇ</h1>
+        <sumamry>scroll container</sumamry>
+        <postContainer>{/* 게시물들이 저장될 곳? */}</postContainer>
+      </div>
     </div>
   );
 };

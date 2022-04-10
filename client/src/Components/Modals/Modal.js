@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-
 // export const Modal = styled.div.attrs(props => {
 
 //     role: 'modal'

@@ -1,11 +1,10 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import NavBar from './Components/Nav';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Main from './Pages/Main';
-// import logo from './logo.svg';
+import Write from './Pages/Write';
 
 function App() {
   // const [modalOpen, setModalOpen] = useState(false);
@@ -18,9 +17,8 @@ function App() {
   //   setModalOpen(false);
   // };
 
-
   const handleLogout = () => {
-    navigate('/login');
+    // navigate('/login');
     // axios({
     //   method: 'post',
     //   url: 'https://localhost:4000/logout',
@@ -34,16 +32,15 @@ function App() {
     // console.log('성공');
   };
 
-
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={Login} />
-        <Route path="/signup" element={Signup()} />
+        <Route path="/" element={<Login />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/writePage" element={<Write />} />
       </Routes>
-
-      <div>{/* <NavBar /> */}</div>
-      {/* NavBar는 일단 죽여놨습니다. 로그인 주고받고 & 상태 받아 올 때까지 */}
     </div>
   );
 }
