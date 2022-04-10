@@ -2,12 +2,13 @@ const { users } = require('../../models');
 const { generateAccessToken, sendAccessToken } = require('../tokenFunctions');
 
 module.exports = async (req, res) => {
+  // console.log('dd', req);
   const { email, password } = req.body; // 구조분해 할당
   // console.log(req.body);
   const userInfo = await users.findOne({
     where: { email, password },
   });
-  // console.log('dd', userInfo.dataValues);
+
   if (!userInfo) {
     //! 이메일이 디비에 없을경우 400 "message":"email does not exists"
     // if (userInfo.email) {
