@@ -46,7 +46,9 @@ const WritePage = () => {
   Axios.post(
     // 서버에 업로드하는 파일들을 보내줘야한다.
     'uploadPosts',
-    { Authorization: localStorage.getItem('token') },
+    {
+      /* Authorization: localStorage.getItem('token') */
+    },
     formData,
   );
   return (
@@ -65,7 +67,7 @@ const WritePage = () => {
         ></input>{' '}
         <label htmlFor="upload-file">파일선택</label>
       </form>
-      <span>미리보기..?</span>
+      <span>미리보기..</span>
       <div className="imageContainer">
         <img
           src="https://vernixgroup.com/wp-content/themes/consultix/images/no-image-found-360x250.png"

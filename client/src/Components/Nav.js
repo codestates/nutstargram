@@ -8,7 +8,7 @@ import Login from '../Pages/Login';
 export default function Nav() {
   return (
     <div>
-      개발자님, 안녕하세요.
+      개발자님, 안녕하세요. 안녕 못합니다...
       <br />
       <Link to="/login">
         <button type="button">로그아웃</button>
@@ -23,8 +23,8 @@ export default function Nav() {
         <button type="button">일기를 써보자!</button>
       </Link>
       <Routes>
-        <Route path="/login" element={<Login />} exact={true} />
-        <Route path="/Edit_contents" element={<Edit_contents />} exact={true} />
+        <Route path="/login*" element={<Login />} />
+        {/* <Route path="/Edit_contents" element={<Edit_contents />} /> */}
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/WritePage" element={<WritePage />} />
       </Routes>
