@@ -23,8 +23,8 @@ const NavBar = () => {
         <button type="button">일기를 써보자!</button>
       </Link>
       <Routes>
-        <Route path="/login" element={<Login />} exact={true} />
-        <Route path="/Edit_contents" element={<Edit_contents />} exact={true} />
+        <Route path="/login*" element={<Login />} />
+        {/* <Route path="/Edit_contents" element={<Edit_contents />} /> */}
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/WritePage" element={<WritePage />} />
       </Routes>
