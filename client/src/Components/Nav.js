@@ -5,13 +5,13 @@ import MyPage from '../Pages/Mypage';
 import WritePage from '../Pages/Write';
 import Login from '../Pages/Login';
 
-const NavBar = () => {
+export default function Nav() {
   return (
     <div>
       개발자님, 안녕하세요. 안녕 못합니다...
       <br />
       <Link to="/login">
-        <button type="button">Login</button>
+        <button type="button">로그아웃</button>
       </Link>
       <Link to="/Edit_contents">
         <button type="button">Edit Contents!</button>
@@ -30,6 +30,4 @@ const NavBar = () => {
       </Routes>
     </div>
   );
-};
-
-export default NavBar;
+}
