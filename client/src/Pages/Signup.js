@@ -2,13 +2,15 @@ import React, { Fragment, useState, useEffect } from 'react';
 import '../Styles/signup.css';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const SignUpPage = () => {
   const [inputValue, setInputValue] = useState({
-    userName: '',
+    username: '',
     email: '',
     mobile: '',
     password: '',
-    confirmPassword: '',
+    confirmpassword: '',
   });
   // 값 상태 저장
   const [emailMessage, setEmailMessage] = useState(
@@ -22,7 +24,7 @@ const SignUpPage = () => {
     useState(`비밀번호가 일치하지 않습니다`);
   // 입력규칙 오류메시지 저장
 
-  const { userName, email, mobile, password, confirmPassword } = inputValue;
+  const { username, email, mobile, password, confirmpassword } = inputValue;
 
   const isValidEmail = email.includes('@') && email.includes('.');
   // email 검사 : @ 와 . 포함 될 것
@@ -31,16 +33,16 @@ const SignUpPage = () => {
   const isValidPassword = password.length >= 8 && specialLetter >= 1;
   // 특수문자 1자 이상, 전체 8자 이상
   const isValidConfirmPassword =
-    confirmPassword === password &&
-    confirmPassword.length !== 0 &&
+    confirmpassword === password &&
+    confirmpassword.length !== 0 &&
     password.length !== 0;
   // 비밀번호 확인값도 같은지 확인
   const isValidInput =
-    userName.length >= 1 &&
+    username.length >= 1 &&
     email.length >= 1 &&
     mobile.length >= 1 &&
     password.length >= 1 &&
-    confirmPassword.length >= 1;
+    confirmpassword.length >= 1;
   // 모든 칸에 한자 이상 적었을 때
   const getIsActive =
     isValidEmail &&
@@ -55,6 +57,7 @@ const SignUpPage = () => {
       ...inputValue,
       [name]: value,
     });
+
     // 값이 저장되는 로직
 
     if (isValidEmail) {
@@ -79,29 +82,39 @@ const SignUpPage = () => {
   };
 
   const handleButtonValid = () => {
-    if (!isValidInput) {
-      alert('빈칸을 채워주세요');
-    } else if (!isValidEmail) {
-      alert('email에는 @와 . 이 포함되어야 합니다.');
-    } else if (!isValidPassword) {
-      alert(
-        '비밀번호는 8자리 이상이어야 하고 특수문자 1자 이상 포함되어야 합니다.',
-      );
-    } else if (!isValidConfirmPassword) {
-      alert('비밀번호가 서로 같은지 확인해주세요');
-    } else {
-      // post 요청
-      axios
-        .post('http://localhost:3000/signup', {
-          userName: userName,
-          email: email,
-          mobile: mobile,
-          password: password,
-        })
-        .then(response => {
-          console.log(response.data);
-        });
-    }
+    // if (!isValidInput) {
+    //   alert('빈칸을 채워주세요');
+    // } else if (!isValidEmail) {
+    //   alert('email에는 @와 . 이 포함되어야 합니다.');
+    // } else if (!isValidPassword) {
+    //   alert(
+    //     '비밀번호는 8자리 이상이어야 하고 특수문자 1자 이상 포함되어야 합니다.',
+    //   );
+    // } else if (!isValidConfirmPassword) {
+    //   alert('비밀번호가 서로 같은지 확인해주세요');
+    // } else {
+    // post 요청
+    const data = {
+      username: username,
+      password: password,
+      mobile: mobile,
+      email: email,
+    };
+
+    axios({
+      url: 'http://localhost:4000/signup',
+      method: 'post',
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': `application/json`,
+      },
+    })
+      .then(response => {
+        console.log('sendOK', response.data);
+      })
+      .catch(() => {
+        console.log('Error!');
+      });
   };
   // 조건 중 하나라도 만족하지 못할 때 버튼 누르면 알림창
 
@@ -111,7 +124,7 @@ const SignUpPage = () => {
       {/* input type text or textarea */}
       <form className="signUpInput">
         <div className="inputMessage">User Name *</div>
-        <input name="userName" onChange={handleInput}></input>
+        <input name="username" onChange={handleInput}></input>
         <br />
         <div className="inputMessage">Email *</div>
         <input name="email" onChange={handleInput}></input>
@@ -139,7 +152,7 @@ const SignUpPage = () => {
         </div>
         <br />
         <div className="inputMessage">Confirm Password *</div>
-        <input name="confirmPassword" onChange={handleInput}></input>
+        <input name="confirmpassword" onChange={handleInput}></input>
         <br />
         <div
           onChange={handleInput}
