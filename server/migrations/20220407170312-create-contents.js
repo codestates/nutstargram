@@ -9,6 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      //users의 id값
       user_id: {
         type: Sequelize.INTEGER,
       },
