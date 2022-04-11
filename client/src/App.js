@@ -5,6 +5,9 @@ import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Main from './Pages/Main';
 import Write from './Pages/Write';
+import Mypage from './Pages/Mypage';
+import Nav from './Components/Nav';
+import Edituserinfo from './Pages/Edit_userInfo';
 
 function App() {
   // const [modalOpen, setModalOpen] = useState(false);
@@ -34,12 +37,16 @@ function App() {
 
   return (
     <div className="App">
+      <Nav />
+
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/main" element={<Main />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/edituserinfo" element={<Edituserinfo />} />
       </Routes>
     </div>
   );
