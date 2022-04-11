@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
   if (mainUser) {
     // console.log(mainUser);
     res.status(200).send({ data: { userInfo: mainUser }, message: 'ok' });
+    // console.log(res);
   } else {
     res.status(400).send({ message: '다시 보내주세요' });
   }
