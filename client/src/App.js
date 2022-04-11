@@ -1,37 +1,36 @@
 import './App.css';
-import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Main from './Pages/Main';
 import Write from './Pages/Write';
 
 function App() {
-  // const [modalOpen, setModalOpen] = useState(false);
-
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
-
-  const handleLogout = () => {
-    // navigate('/login');
-    // axios({
-    //   method: 'post',
-    //   url: 'https://localhost:4000/logout',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   withCredentials: true,
-    // })
-    //   .then(() => {
-    //     navigate('/');
-    //   })
-    //   .catch(err => console.log(err));
-    // console.log('성공');
+  // const history = useHistory();
+  // 유저 정보를 받아와야한다.
+  const [isLogin, setIsLogin] = useState(false);
+  const [userinfo, setUserinfo] = useState(null);
+  const isAuthenticated = async () => {
+    await axios({
+      url: 'http://localhost4000/users',
+      method: 'get',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }).then(res => {
+      console.log(res.data);
+      setIsLogin(true);
+    });
   };
-
+  const handleLogout = () => {
+    axios.post('https://localhost:4000/signout').then(res => {
+      setUserinfo(null);
+      setIsLogin(false);
+      // '/login' 페이지로 이동시켜야한다.
+    });
+  };
   return (
     <div className="App">
       <Routes>

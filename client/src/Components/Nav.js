@@ -6,6 +6,7 @@ import WritePage from '../Pages/Write';
 import Login from '../Pages/Login';
 
 export default function Nav() {
+  // mypage에서 정보를 렌더링 할 수 있도록 여기서 mypage로 이동할 때 발생시킬 handleUserinfo 이벤트 함수가 있어야한다.
   return (
     <div>
       개발자님, 안녕하세요. 안녕 못합니다...
