@@ -111,56 +111,15 @@ const SignUpPage = () => {
           console.log(res.data);
         })
         .catch(err => {
-          console.log(err);
+          if (err.message === 'Request failed with status code 409') {
+            alert('이미 존재하는 이메일 입니다');
+          }
         });
     }
   };
 
-  // email 유효성 검사 함수
-  // const handleValidEmail = () => {
-  //   const data = {
-  //     username: username,
-  //     password: password,
-  //     mobile: mobile,
-  //     email: email,
-  //   };
-
-  //   axios({
-  //     method: 'post',
-  //     url: 'http://localhost:4000/signup',
-  //     data: data,
-  //     headers: {
-  //       'Content-Type': `application/json`,
-  //     },
-  //   })
-  //     .then(res => {
-  //       console.log(res.data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err.message);
-  //       console.log(err.status);
-  //       if (err.message === 'Request failed with status code 409') {
-  //         alert('이미 존재하는 email 입니다');
-  //       }
-  //     });
-  // email 유효성 검사 함수
-  const handleValidEmail = () => {
-    const data = {
-      password: password,
-    };
-
-    axios({
-      method: 'get',
-      url: 'http://localhost:4000/signup',
-      data: data,
-    })
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  // email 인증메일 구현(advanced)
+  const handleValidEmail = () => {};
 
   return (
     <Fragment>
@@ -181,7 +140,7 @@ const SignUpPage = () => {
         </div>
         <br />
         <button type="button" onClick={handleValidEmail}>
-          Email Confirm
+          인증메일 보내기(미구현)
         </button>
         <br />
         <div className="inputMessage">Mobile *</div>
@@ -213,7 +172,7 @@ const SignUpPage = () => {
         type="button"
         onClick={handleButtonValid}
       >
-        CREATE USER ACCOUNT
+        회원가입
       </button>
     </Fragment>
   );
