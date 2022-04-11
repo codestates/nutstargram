@@ -125,51 +125,47 @@ const SignUpPage = () => {
     <Fragment>
       <h1>회원가입 페이지 입니다</h1>
       {/* input type text or textarea */}
-      <form className="signUpInput">
+      <form name="all" className="signUpInput">
         <div className="inputMessage">User Name *</div>
-        <input name="username" onChange={handleInput}></input>
-        <br />
+        <input type="text" name="username" onChange={handleInput}></input>
         <div className="inputMessage">Email *</div>
-        <input name="email" onChange={handleInput}></input>
-        <br />
+        <input type="text" name="email" onChange={handleInput}></input>
         <div
           onChange={handleInput}
           className={isValidEmail ? 'successMessage' : 'failMessage'}
         >
           {emailMessage}
         </div>
-        <br />
         <button type="button" onClick={handleValidEmail}>
           인증메일 보내기(미구현)
         </button>
-        <br />
         <div className="inputMessage">Mobile *</div>
-        <input name="mobile" onChange={handleInput}></input>
-        <br />
+        <input type="text" name="mobile" onChange={handleInput}></input>
         <div className="inputMessage">Password *</div>
-        <input name="password" onChange={handleInput}></input>
-        <br />
+        <input type="text" name="password" onChange={handleInput}></input>
         <div
           onChange={handleInput}
           className={isValidPassword ? 'successMessage' : 'failMessage'}
         >
           {passwordMessage}
         </div>
-        <br />
         <div className="inputMessage">Confirm Password *</div>
-        <input name="confirmpassword" onChange={handleInput}></input>
-        <br />
+        <input
+          type="text"
+          name="confirmpassword"
+          onChange={handleInput}
+        ></input>
         <div
           onChange={handleInput}
           className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
         >
           {confirmPasswordMessage}
         </div>
-        <br />
       </form>
       <button
         className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
         type="button"
+        name="submit"
         onClick={handleButtonValid}
       >
         회원가입
