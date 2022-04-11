@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import Edit_contents from '../Pages/Edit_contents';
 import MyPage from '../Pages/Mypage';

@@ -5,19 +5,14 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const MyPage = () => {
-  axios({
-    method: 'get',
-    url: 'http://localhost:4000/userinfo',
-    params: { email: 'hello@world.com' },
-  })
-    .then(res => {
-      console.log(`status code: ${res.status}`);
-      console.log(`headers: ${res.headers}`);
-      console.log(res.data.data.userInfo);
-      console.log(res);
-    })
-    .catch(err => console.log(err.message));
-
+  // axios({
+  //   method: 'get',
+  //   url: 'http://localhost:4000/userinfo',
+  // })
+  //   .then(res => {
+  //     console.log('~~~~~~~~', res);
+  //   })
+  //   .catch(err => console.log(err.message));
   return (
     <div>
       <Link to="/edituserinfo">
