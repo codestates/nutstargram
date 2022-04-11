@@ -18,7 +18,7 @@ const SignUpPage = () => {
   );
 
   const [passwordMessage, setPasswordMessage] = useState(
-    `비밀번호는 숫자8자리 이상이어야 합니다`,
+    `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다`,
   );
   const [confirmPasswordMessage, setConfirmPasswordMessage] =
     useState(`비밀번호가 일치하지 않습니다`);
@@ -30,8 +30,7 @@ const SignUpPage = () => {
   // email 검사 : @ 와 . 포함 될 것
   const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
   // 비밀번호 특수문자 확인을 위한 정규식 표현
-  const isValidPassword = password.length >= 8;
-  // && specialLetter >= 1;
+  const isValidPassword = password.length >= 8 && specialLetter >= 1;
   // 특수문자 1자 이상, 전체 8자 이상
   const isValidConfirmPassword =
     confirmpassword === password &&
@@ -70,7 +69,9 @@ const SignUpPage = () => {
     if (isValidPassword) {
       setPasswordMessage('올바른 비밀번호 입니다');
     } else {
-      setPasswordMessage('비밀번호는 숫자 8자 이상으로 작성해 주셔야 합니다');
+      setPasswordMessage(
+        '비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다',
+      );
     }
 
     if (isValidConfirmPassword) {
@@ -116,31 +117,48 @@ const SignUpPage = () => {
   };
 
   // email 유효성 검사 함수
+  // const handleValidEmail = () => {
+  //   const data = {
+  //     username: username,
+  //     password: password,
+  //     mobile: mobile,
+  //     email: email,
+  //   };
+
+  //   axios({
+  //     method: 'post',
+  //     url: 'http://localhost:4000/signup',
+  //     data: data,
+  //     headers: {
+  //       'Content-Type': `application/json`,
+  //     },
+  //   })
+  //     .then(res => {
+  //       console.log(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err.message);
+  //       console.log(err.status);
+  //       if (err.message === 'Request failed with status code 409') {
+  //         alert('이미 존재하는 email 입니다');
+  //       }
+  //     });
+  // email 유효성 검사 함수
   const handleValidEmail = () => {
     const data = {
-      username: username,
       password: password,
-      mobile: mobile,
-      email: email,
     };
 
     axios({
-      method: 'post',
+      method: 'get',
       url: 'http://localhost:4000/signup',
       data: data,
-      headers: {
-        'Content-Type': `application/json`,
-      },
     })
       .then(res => {
         console.log(res.data);
       })
       .catch(err => {
-        console.log(err.message);
-        console.log(err.status);
-        if (err.message === 'Request failed with status code 409') {
-          alert('이미 존재하는 email 입니다');
-        }
+        console.log(err);
       });
   };
 
