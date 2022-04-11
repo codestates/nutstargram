@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   // console.log(req.cookies.jwt);
   const userToken = req.cookies.jwt;
   const { email } = req.body;
-  console.log(email);
+  // console.log(email);
   const mainUser = await users.findOne({
     where: { email: email },
     attributes: [
@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
     ],
   });
   if (mainUser) {
-    console.log(mainUser);
+    // console.log(mainUser);
     res.status(200).send({ data: { userInfo: mainUser }, message: 'ok' });
   } else {
-    res.status(500).send({ message: 'err' });
+    res.status(400).send({ message: '다시 보내주세요' });
   }
 
   // res.status(500);
