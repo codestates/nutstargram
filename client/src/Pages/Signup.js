@@ -67,56 +67,59 @@ const SignUpPage = () => {
     }
 
     if (isValidPassword) {
-      setPasswordMessage(`올바른 비밀번호 입니다`);
+      setPasswordMessage('올바른 비밀번호 입니다');
     } else {
       setPasswordMessage(
-        `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다`,
+        '비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다',
       );
     }
 
     if (isValidConfirmPassword) {
-      setConfirmPasswordMessage(`비밀번호 확인 되었습니다`);
+      setConfirmPasswordMessage('비밀번호 확인 되었습니다');
     } else {
-      setConfirmPasswordMessage(`비밀번호가 일치하지 않습니다`);
+      setConfirmPasswordMessage('비밀번호가 일치하지 않습니다');
     }
   };
 
   const handleButtonValid = () => {
-    // if (!isValidInput) {
-    //   alert('빈칸을 채워주세요');
-    // } else if (!isValidEmail) {
-    //   alert('email에는 @와 . 이 포함되어야 합니다.');
-    // } else if (!isValidPassword) {
-    //   alert(
-    //     '비밀번호는 8자리 이상이어야 하고 특수문자 1자 이상 포함되어야 합니다.',
-    //   );
-    // } else if (!isValidConfirmPassword) {
-    //   alert('비밀번호가 서로 같은지 확인해주세요');
-    // } else {
-    // post 요청
-    const data = {
-      username: username,
-      password: password,
-      mobile: mobile,
-      email: email,
-    };
+    if (!isValidInput) {
+      alert('빈칸을 채워주세요');
+    } else if (!isValidEmail) {
+      alert('email에는 @와 . 이 포함되어야 합니다');
+    } else if (!isValidPassword) {
+      alert('비밀번호는 숫자8자리 이상이어야 합니다');
+    } else if (!isValidConfirmPassword) {
+      alert('비밀번호가 서로 같은지 확인해주세요');
+    } else {
+      // post 요청
+      const data = {
+        username: username,
+        password: password,
+        mobile: mobile,
+        email: email,
+      };
 
-    axios({
-      url: 'http://localhost:4000/signup',
-      method: 'post',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': `application/json`,
-      },
-    })
-      .then(response => {
-        console.log('sendOK', response.data);
+      axios({
+        method: 'post',
+        url: 'http://localhost:4000/signup',
+        data: data,
+        headers: {
+          'Content-Type': `application/json`,
+        },
       })
-      .catch(() => {
-        console.log('Error!');
-      });
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          if (err.message === 'Request failed with status code 409') {
+            alert('이미 존재하는 이메일 입니다');
+          }
+        });
+    }
   };
-  // 조건 중 하나라도 만족하지 못할 때 버튼 누르면 알림창
+
+  // email 인증메일 구현(advanced)
+  const handleValidEmail = () => {};
 
   return (
     <Fragment>
@@ -136,7 +139,9 @@ const SignUpPage = () => {
           {emailMessage}
         </div>
         <br />
-        <button>Email Confirm</button>
+        <button type="button" onClick={handleValidEmail}>
+          인증메일 보내기(미구현)
+        </button>
         <br />
         <div className="inputMessage">Mobile *</div>
         <input name="mobile" onChange={handleInput}></input>
@@ -167,7 +172,7 @@ const SignUpPage = () => {
         type="button"
         onClick={handleButtonValid}
       >
-        CREATE USER ACCOUNT
+        회원가입
       </button>
     </Fragment>
   );
