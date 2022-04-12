@@ -14,8 +14,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   contents.init(
     {
+      user_id: DataTypes.STRING,
       content_img: DataTypes.STRING,
       content_text: DataTypes.STRING,
+      content_emoji: DataTypes.STRING,
+      content_weather: DataTypes.STRING,
     },
     {
       sequelize,

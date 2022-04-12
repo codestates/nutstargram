@@ -45,4 +45,15 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+//모델정보를 읽어온다.
+db.users = require('./users')(sequelize, Sequelize);
+db.contents = require('./contents')(sequelize, Sequelize);
+
+//모델간의 관계를 정의한다.
+db.users.hasMany(db.contents, { foreignKey: 'user_id', sourceKey: 'id' });
+db.contents.belongsTo(db.users, {
+  foreignKey: 'user_id',
+  targetKey: 'id',
+});
+
 module.exports = db;
