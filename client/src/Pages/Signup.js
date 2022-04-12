@@ -116,17 +116,15 @@ const SignUpPage = () => {
         console.log(res.data);
       })
 
-        .then(res => {
-          navigate('/login');
-          console.log(res.data);
-        })
-        .catch(err => {
-          if (err.message === 'Request failed with status code 409') {
-            alert('이미 존재하는 이메일 입니다');
-          }
-        });
-    }
-
+      .then(res => {
+        navigate('/login');
+        console.log(res.data);
+      })
+      .catch(err => {
+        if (err.message === 'Request failed with status code 409') {
+          alert('이미 존재하는 이메일 입니다');
+        }
+      });
   };
 
   return (

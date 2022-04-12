@@ -8,14 +8,14 @@ module.exports = {
     // console.log(data);
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
   },
-  sendAccessToken: (res, accessToken) => {
+  sendAccessToken: (res, accessToken, data) => {
     // TODO: JWT 토큰을 쿠키로 전달합니다.
     return res
       .status(200)
       .cookie('jwt', accessToken, {
         httpOnly: true,
       })
-      .json({ data: { accessToken }, message: 'ok' });
+      .json({ data, accessToken, message: 'ok' });
   },
   isAuthorized: req => {
     // TODO: JWT 토큰 정보를 받아서 검증합니다.
