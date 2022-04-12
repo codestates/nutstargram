@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './App.css';
 import { React, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
@@ -9,13 +10,19 @@ import Mypage from './Pages/Mypage';
 import Nav from './Components/Nav';
 import Edituserinfo from './Pages/Edit_userInfo';
 
+axios.defaults.withCredentials = true;
 function App() {
+  const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
     username: '',
     user_img: '',
     email: '',
     mobile: '',
   });
+  const handleLogin = () => {
+    setLogin(true);
+  };
+
   const handleUserInfo = () => {};
 
   // const [modalOpen, setModalOpen] = useState(false);
@@ -45,15 +52,23 @@ function App() {
 
   return (
     <div className="App">
-      <Nav />
-
+      {islogin ? (
+        <div>
+          <Nav />
+          <Main />
+        </div>
+      ) : (
+        <div>
+          <Login />
+        </div>
+      )}
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="login" element={<Login />} />
         <Route path="/main" element={<Main />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write />} />
-        <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="/edituserinfo" element={<Edituserinfo />} />
       </Routes>
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component, Routes, Route, BrowserRouter } from 'react';
 import styled from 'styled-components';
 import Nav from '../Components/Nav';
@@ -12,7 +13,6 @@ const MainPage = () => {
   `;
   return (
     <div className="Main">
-      <Nav />
       <br />
       <div>
         <h1>ㅎㅇ</h1>
