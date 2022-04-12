@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import { React, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
@@ -10,6 +10,14 @@ import Nav from './Components/Nav';
 import Edituserinfo from './Pages/Edit_userInfo';
 
 function App() {
+  const [userinfo, setUserinfo] = useState({
+    username: '',
+    user_img: '',
+    email: '',
+    mobile: '',
+  });
+  const handleUserInfo = () => {};
+
   // const [modalOpen, setModalOpen] = useState(false);
 
   // const openModal = () => {
@@ -45,7 +53,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write />} />
-        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
         <Route path="/edituserinfo" element={<Edituserinfo />} />
       </Routes>
     </div>

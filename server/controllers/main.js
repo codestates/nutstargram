@@ -8,9 +8,11 @@ module.exports = async (req, res) => {
   });
   if (find_content) {
     res.status(200).send(find_content);
-    console.log(find_content);
+    // console.log(find_content);
+  } else {
+    res.status(400).send({ message: 'Empty Diary' });
   }
-  res.status(400);
+
   // 클라에서 컨텐츠의 유저 아이디로 요청을 보내야함
 
   // 유저아이디 받으면 findOne으로 조회

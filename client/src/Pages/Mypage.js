@@ -26,7 +26,6 @@ const MyPage = () => {
     .catch(err => console.log(err.message));
 
   // 0411 22:26 무한 루프중...
-
   return (
     <div>
       <Link to="/edituserinfo">
