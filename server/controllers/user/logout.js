@@ -3,5 +3,5 @@ module.exports = (req, res) => {
     return res.status(201).send({ message: 'ok' });
     // 쿠키 삭제 추가하기
   }
-  res.status(500).send({ message: 'err' });
+  res.status(500).cookie('jwt', null).send({ message: 'err' });
 };

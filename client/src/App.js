@@ -10,7 +10,7 @@ import Mypage from './Pages/Mypage';
 import Nav from './Components/Nav';
 import Edituserinfo from './Pages/Edit_userInfo';
 
-axios.defaults.withCredentials = true;
+//axios.defaults.withCredentials = true;
 function App() {
   const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
@@ -19,7 +19,7 @@ function App() {
     email: '',
     mobile: '',
   });
-  const handleLogin = () => {
+  const handleLoginSuccess = () => {
     setLogin(true);
   };
 
@@ -59,11 +59,11 @@ function App() {
         </div>
       ) : (
         <div>
-          <Login />
+          <Login handleLoginSuccess={handleLoginSuccess} />
         </div>
       )}
       <Routes>
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/main" element={<Main />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />

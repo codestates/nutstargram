@@ -41,13 +41,19 @@ const WritePage = () => {
     };
   };
 
-  axios.post(
+  axios
+    .post
     // 서버에 업로드하는 파일들을 보내줘야한다.
-    'http://localhost:4000/write',
-    {
-      /* Authorization: localStorage.getItem('token') */
-    },
-  );
+    // 'http://localhost:4000/write',
+    // {
+    //   email: loginInfo.email,
+    //   password: loginInfo.password,
+    // },
+    // {
+    //   headers: { 'Content-Type': 'application/json' },
+    //   withCredentials: true,
+    // },
+    ();
   return (
     <div>
       <h2>일기 작성 페이지</h2>
