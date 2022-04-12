@@ -14,13 +14,22 @@ import Signup from './Pages/Signup';
 function App() {
   const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
-    username: '1번이름',
+    id: '',
+    username: '',
     user_img: '',
     email: '',
     mobile: '',
   });
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = userInfo => {
+    // console.log('app.js', userInfo.data.data.id); 디비속 유저의 아이디값이 나옵니다
     setLogin(true);
+    setUserinfo({
+      id: userInfo.data.data.id,
+      username: userInfo.data.data.username,
+      user_img: userInfo.data.data.user_img,
+      email: userInfo.data.data.email,
+      mobile: userInfo.data.data.mobile,
+    });
   };
   const [content, setContent] = useState({
     // 여기서 contents를 관리하고 db에서 받아온 뒤 main page에 Props로 내려줘서 렌더링 할 것입니다.
@@ -50,8 +59,8 @@ function App() {
     <div className="App">
       {islogin ? (
         <div>
-          <NavBar handleLogout={handleLogout} />
-          <Main />
+          <NavBar />
+          <Main userinfo={userinfo} />
         </div>
       ) : (
         <div>
