@@ -2,7 +2,6 @@ import './App.css';
 import { React, useState } from 'react';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Main from './Pages/Main';
@@ -21,8 +20,6 @@ function App() {
   });
 
   const [isLogin, setIsLogin] = useState(true);
-
-  const handleUserInfo = () => {};
 
   const handleLogout = () => {
     console.log('로그아웃?');
