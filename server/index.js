@@ -40,7 +40,7 @@ app.patch('/edituser', controllers.edituser);
 app.get('/userinfo', controllers.userinfo);
 app.get('/main', controllers.main);
 
-const HTTPS_PORT = process.env.HTTPS_PORT ||80;
+const HTTPS_PORT = process.env.HTTPS_PORT || 80;
 
 // let server;
 // if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
