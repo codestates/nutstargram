@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true;
 function App() {
   const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
-    username: '',
+    username: '1번이름',
     user_img: '',
     email: '',
     mobile: '',
@@ -49,7 +49,7 @@ function App() {
     //   .catch(err => console.log(err));
     // console.log('성공');
   };
-
+  // element={<Signup username={userinfo.username}
   return (
     <div className="App">
       {islogin ? (
