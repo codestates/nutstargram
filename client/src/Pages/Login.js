@@ -27,20 +27,23 @@ export default function Login({ handleLoginSuccess }) {
     if (loginInfo.email === '' || loginInfo === '') {
       setErrorMsg('이메일과 비밀번호를 입력하세요');
     } else {
-      axios.post(
-        'http://localhost:4000/login',
-        {
-          email: loginInfo.email,
-          password: loginInfo.password,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        },
-      );
-      // .then(() => )
-      // .catch(err => console.log(err));
-      handleLoginSuccess();
+      axios
+        .post(
+          'http://localhost:4000/login',
+          {
+            email: loginInfo.email,
+            password: loginInfo.password,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          },
+        )
+        .then(data => {
+          //console.log(data) 유저 정보 들어온다
+          handleLoginSuccess(data);
+        });
+      // 디비 조회못하고 메인으로 리디렉션중
     }
   };
 

@@ -30,7 +30,7 @@ const MyPage = () => {
   return (
     <div>
       <Link to="/edituserinfo">
-        <button type="button">내정보 편집하깅 :)</button>
+        <button type="button">내정보 편집하깅 </button>
       </Link>
       <div>마이페이지</div>
       <div>마이마이한 내용</div>

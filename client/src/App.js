@@ -14,13 +14,22 @@ import Edituserinfo from './Pages/Edit_userInfo';
 function App() {
   const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
-    username: '1번이름',
+    id: '',
+    username: '',
     user_img: '',
     email: '',
     mobile: '',
   });
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = userInfo => {
+    //console.log('app.js', userInfo.data.data.id); 디비속 유저의 아이디값이 나옵니다
     setLogin(true);
+    setUserinfo({
+      id: userInfo.data.data.id,
+      username: userInfo.data.data.username,
+      user_img: userInfo.data.data.user_img,
+      email: userInfo.data.data.email,
+      mobile: userInfo.data.data.mobile,
+    });
   };
 
   const handleUserInfo = () => {};
@@ -55,7 +64,7 @@ function App() {
       {islogin ? (
         <div>
           <Nav />
-          <Main />
+          <Main userinfo={userinfo} />
         </div>
       ) : (
         <div>
