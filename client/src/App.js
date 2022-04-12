@@ -3,41 +3,35 @@ import { React, useState } from 'react';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Login from './Pages/Login';
-import Signup from './Pages/Signup';
 import Main from './Pages/Main';
 import Write from './Pages/Write';
 import Mypage from './Pages/Mypage';
 import NavBar from './Components/Nav';
 import Edituserinfo from './Pages/Edit_userInfo';
+import Signup from './Pages/Signup';
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 function App() {
   const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
-    id: '',
-    username: '',
+    username: '1번이름',
     user_img: '',
     email: '',
     mobile: '',
   });
-  const [contents, setContents] = useState({
-    // db로부터 받아올 컨텐츠 관련 정보를 담은 State를 선언해줍니다.
-    // edit_content 페이지에서 Props로 내려받아서 수정할 데이터를 받아올 수 있으며
-    // Main 페이지로 top-down 형식으로 데이터를 흘려보내줄 수 있을거라 생각합니다.
+  const handleLoginSuccess = () => {
+    setLogin(true);
+  };
+  const [content, setContent] = useState({
+    // 여기서 contents를 관리하고 db에서 받아온 뒤 main page에 Props로 내려줘서 렌더링 할 것입니다.
     user_id: '',
     content_img: [],
     content_text: '',
     content_emoji: null,
     content_weather: null,
   });
-
-  const handleLogin = () => {
-    setLogin(true);
-  };
-
-  const handleUserInfo = () => {};
-
   const [isLogin, setIsLogin] = useState(true);
+  const handleUserInfo = () => {};
 
   const handleLogout = () => {
     console.log('로그아웃?');
@@ -47,9 +41,11 @@ function App() {
       Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
     });
   };
-  const handelContents = () => {
-    axios.get('http://localhost:4000/users');
+  const handleContents = () => {
+    axios.get('http://localhost:4000/');
+    console.log('nope');
   };
+  // element={<Signup username={userinfo.username}
   return (
     <div className="App">
       {islogin ? (
@@ -59,12 +55,15 @@ function App() {
         </div>
       ) : (
         <div>
-          <Login />
+          <Login handleLoginSuccess={handleLoginSuccess} />
         </div>
       )}
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="/main" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/main"
+          element={<Main handleContents={handleContents} />}
+        />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write />} />

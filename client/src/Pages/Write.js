@@ -147,14 +147,14 @@ const WritePage = props => {
   //     alert('글을 입력해주세요');
   //   }
   // };
-  const sendTextContent = async () => {
+  const sendContent = async () => {
     console.log('sending texts to server');
     if (write.length !== 0) {
       console.log('글자 내용이 존재함');
       await axios
         .post(
           'http://localhost:4000/write',
-          { content_text: write, user_id: 1 },
+          { content_text: write, user_id: 1, content_img: previewImg }, // formData는 객체라서 여기다 집어넣을수가 없음..
           {
             headers: {
               'Content-type': 'application/json',
@@ -166,6 +166,7 @@ const WritePage = props => {
         .then(res => {
           if (res.message === 'ok') {
             console.log('텍스트 내용 전송이 성공적으로 전달되었습니다.');
+            Navigate('/main');
           }
         });
     } else {
@@ -173,6 +174,19 @@ const WritePage = props => {
     }
   };
 
+  axios
+    .post
+    // 서버에 업로드하는 파일들을 보내줘야한다.
+    // 'http://localhost:4000/write',
+    // {
+    //   email: loginInfo.email,
+    //   password: loginInfo.password,
+    // },
+    // {
+    //   headers: { 'Content-Type': 'application/json' },
+    //   withCredentials: true,
+    // },
+    ();
   return (
     <div>
       <h2>일기 작성 페이지</h2>
@@ -209,13 +223,7 @@ const WritePage = props => {
         onChange={handleTextChange}
       ></textarea>
       <br />
-      <button
-        className="btn-post"
-        onClick={() => {
-          submitContent();
-          sendTextContent();
-        }}
-      >
+      <button className="btn-post" onClick={sendContent}>
         일기 작성
       </button>
     </div>
