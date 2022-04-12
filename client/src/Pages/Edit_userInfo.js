@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 

@@ -8,7 +8,6 @@ module.exports = async (req, res) => {
   const userInfo = await users.findOne({
     where: { email, password },
   });
-
   if (!userInfo) {
     //! 이메일이 디비에 없을경우 400 "message":"email does not exists"
     // if (userInfo.email) {
@@ -24,4 +23,5 @@ module.exports = async (req, res) => {
     return sendAccessToken(res, accessToken);
   }
   res.status(500).send({ message: 'err' });
+  console.log('err');
 };
