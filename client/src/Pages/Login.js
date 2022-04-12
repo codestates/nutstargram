@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -19,6 +20,7 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('');
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
+    console.log(e.target.value);
   };
   const handleLoginSuccess = () => {};
 
@@ -50,6 +52,7 @@ export default function Login() {
         <input
           className="userEmail"
           placeholder="please write your email"
+          onChange={handleInputValue('email')}
         ></input>
         <br />
         <br />
