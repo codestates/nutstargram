@@ -23,5 +23,4 @@ module.exports = async (req, res) => {
     return sendAccessToken(res, accessToken);
   }
   res.status(500).send({ message: 'err' });
-  console.log('err');
 };

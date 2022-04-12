@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import logo from '../peanuts.png';
 
-export default function Login() {
+export default function Login({ handleLoginSuccess }) {
   // props required w/ server
   // props에 setToken || handleLoginSuccess를 전달받아 로그인 함수에 전달.
   const style1 = {
@@ -20,16 +20,14 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('');
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
-  const handleLoginSuccess = () => {};
 
   const handleLogin = () => {
     if (loginInfo.email === '' || loginInfo === '') {
       setErrorMsg('이메일과 비밀번호를 입력하세요');
-    }
-    axios
-      .post(
+    } else {
+      axios.post(
         'http://localhost:4000/login',
         {
           email: loginInfo.email,
@@ -39,8 +37,11 @@ export default function Login() {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         },
-      )
-      .then(() => handleLoginSuccess());
+      );
+      // .then(() => )
+      // .catch(err => console.log(err));
+      handleLoginSuccess();
+    }
   };
 
   return (

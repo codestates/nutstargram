@@ -1,11 +1,14 @@
 /* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
+  let navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState({
     username: '',
     email: '',
@@ -109,6 +112,7 @@ const SignUpPage = () => {
         },
       })
         .then(res => {
+          navigate('/login');
           console.log(res.data);
         })
         .catch(err => {

@@ -12,7 +12,8 @@ module.exports = async (req, res) => {
     content_emoji,
     content_weather,
   });
-  console.log(diary instanceof contents); // boolean retrun
+  // console.log(diary instanceof contents);
+  // boolean retrun
   if (diary) {
     res
       .status(200)
