@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -20,12 +20,9 @@ const WritePage = props => {
     content_weather: null,
   });
   // 만들어준 state에 파일객체를 담아서 서버에 업로드 요청을 보낸다.
-  const [postfiles, setPostfiles] = useState({
-    file: [],
-    previewURL: '',
-  });
+  const [postfiles, setPostfiles] = useState([]); // 이미지 파일 자체를 받을 state
 
-  const [previewImg, setPreviewImg] = useState(null); // 미리보기 이미지
+  const [previewImg, setPreviewImg] = useState(null); // 미리보기 이미지 구현을 위한 데이터를 받을 state
 
   const [write, setWrite] = useState('');
 
@@ -33,12 +30,15 @@ const WritePage = props => {
 
   const handleTextChange = e => {
     setWrite(e.target.value);
+    // console.log(e.target.value);
   };
+  const formData = new FormData();
 
   const uploadImg = e => {
     // 이미지를 로컬에서 업로드하는 함수
-    // console.log(e.target.files[0]); 성공적으로 이미지가 출력된다.
+    // console.log(e.target.files[0]); //성공적으로 이미지가 출력된다.
     const reader = new FileReader();
+
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]); // FileReader의 readAsDataURL method와 onloadend를 이용해서 base64의 스트링 데이터로 만들어서 사용할 것.
     }
@@ -51,6 +51,9 @@ const WritePage = props => {
         // previewImgURL이 있다면 previewImg에 해당 이미지의 주소를 넣어준다.
         setPreviewImg(previewImgURL);
       }
+
+      formData.append('file', e.target.files[0]);
+      // console.log(formData.entries());
     };
   };
   // 서버에 파일을 업로드하기위해선 무조건 fromData, append method를 사용해야한다.
@@ -92,25 +95,24 @@ const WritePage = props => {
   //     formData.append('file', e.target.files[0]);
   //   }
   // };
+  // /axios.post ('url', { formData})
+
   const submitContent = () => {
     if (previewImg) {
-      const formData = new FormData();
+      // const formData = new FormData();
       formData.append('file', previewImg);
-      console.log('컨텐츠 전송 버튼이 클릭되었습니다.');
-      axios({
-        url: 'https://localhost4000/write',
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {
-          user_id: returnProps.userinfo_id,
-          content_img: previewImg,
-          content_text: write,
-        },
-      })
+      // console.log(previewImg, '!!!!!!!!');
+      console.log('사진 전송 버튼이 클릭되었습니다.');
+      axios
+        .post({
+          url: 'http://localhost4000/write',
+          data: formData,
+          headers: {
+            'Content-Type': `multipart/form-data; `,
+            withCredentials: true,
+          },
+        })
         .then(res => {
-          res.json();
           console.log(res);
         })
         .then(res => {
@@ -123,7 +125,7 @@ const WritePage = props => {
     }
   };
   /* 위 함수에 body안에 write도 포함시켰기 때문에 더 이상 식을 분기하지 않아도 된다.  */
-  // const sendTextToServer = async () => {
+  // const sendTextContent = async () => {
   //   console.log('문자 전송 버튼 클릭됨');
   //   if (write.length !== 0) {
   //     console.log('조건문 확인');
@@ -145,6 +147,31 @@ const WritePage = props => {
   //     alert('글을 입력해주세요');
   //   }
   // };
+  const sendTextContent = async () => {
+    console.log('sending texts to server');
+    if (write.length !== 0) {
+      console.log('글자 내용이 존재함');
+      await axios
+        .post(
+          'http://localhost:4000/write',
+          { content_text: write, user_id: 1 },
+          {
+            headers: {
+              'Content-type': 'application/json',
+              withCredentials: true,
+            },
+          },
+        )
+        .then(res => res.json())
+        .then(res => {
+          if (res.message === 'ok') {
+            console.log('텍스트 내용 전송이 성공적으로 전달되었습니다.');
+          }
+        });
+    } else {
+      alert('not enough text');
+    }
+  };
 
   return (
     <div>
@@ -152,11 +179,12 @@ const WritePage = props => {
       <Link to="/main">
         <button>뒤로가기</button>
       </Link>
-      <form encType="multiport/form-data">
+      <form encType="multipart/form-data">
         <label htmlFor="upload-file">이미지 업로드 </label>
         <input
           id="uploadFile"
           type="file"
+          name="content_img"
           accept="image/*"
           multiple
           onChange={e => uploadImg(e)}
@@ -181,7 +209,13 @@ const WritePage = props => {
         onChange={handleTextChange}
       ></textarea>
       <br />
-      <button className="btn-post" onClick={submitContent}>
+      <button
+        className="btn-post"
+        onClick={() => {
+          submitContent();
+          sendTextContent();
+        }}
+      >
         일기 작성
       </button>
     </div>

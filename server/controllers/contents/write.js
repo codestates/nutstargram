@@ -1,16 +1,28 @@
+const multer = require('multer');
+const path = require('path');
 const { contents } = require('../../models');
+
+const PORT = 4000;
 
 module.exports = async (req, res) => {
   console.log(req.body);
   const { user_id, content_img, content_text, content_emoji, content_weather } =
     req.body;
-  //
+
+  // app.use(express.static('public'));
+
+  // const storage = multer.diskStorage({
+  //   destination: './public/',
+  //   filename: function (req, file, cb) {
+  //     cb(null, 'imgfile' + Date.now() + path.extname(file.originalname));
+  //   },
+  // });
   const diary = await contents.create({
     user_id,
     content_img,
     content_text,
-    content_emoji,
-    content_weather,
+    // content_emoji,
+    // content_weather,
   });
   console.log(diary instanceof contents); // boolean retrun
   if (diary) {

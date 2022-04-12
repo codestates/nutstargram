@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React, { Component, Routes, Route, BrowserRouter } from 'react';
 import styled from 'styled-components';
-import Nav from '../Components/Nav';
+import NavBar from '../Components/Nav';
 
 const MainPage = () => {
   const postContainer = styled.div`
@@ -12,11 +13,9 @@ const MainPage = () => {
   `;
   return (
     <div className="Main">
-      <Nav />
       <br />
       <div>
         <h1>ㅎㅇ</h1>
-        <sumamry>scroll container</sumamry>
         <postContainer>{/* 게시물들이 저장될 곳? */}</postContainer>
       </div>
     </div>
