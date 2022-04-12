@@ -1,6 +1,7 @@
 import './App.css';
 import { React, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import cat from './cat.jpg';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Main from './Pages/Main';
@@ -11,10 +12,10 @@ import Edituserinfo from './Pages/Edit_userInfo';
 
 function App() {
   const [userinfo, setUserinfo] = useState({
-    username: '1번이름',
-    user_img: '',
-    email: '',
-    mobile: '',
+    username: 'dummy name',
+    user_img: cat,
+    email: 'dummy email',
+    mobile: 'dummy mobile',
   });
   const handleUserInfo = () => {};
 

@@ -121,50 +121,52 @@ const SignUpPage = () => {
 
   return (
     <Fragment>
-      <h1>회원가입 페이지 입니다</h1>
-      {/* input type text or textarea */}
-      <form name="all" className="signUpInput">
-        <div className="inputMessage">User Name *</div>
-        <input type="text" name="username" onChange={handleInput}></input>
-        <div className="inputMessage">Email *</div>
-        <input type="text" name="email" onChange={handleInput}></input>
-        <div
-          onChange={handleInput}
-          // className={isValidEmail ? 'successMessage' : 'failMessage'}
+      <div className="top">
+        <h1>회원가입 페이지 입니다</h1>
+        {/* input type text or textarea */}
+        <form name="all" className="signUpInput">
+          <div className="inputMessage">User Name *</div>
+          <input type="text" name="username" onChange={handleInput}></input>
+          <div className="inputMessage">Email *</div>
+          <input type="text" name="email" onChange={handleInput}></input>
+          <div
+            onChange={handleInput}
+            // className={isValidEmail ? 'successMessage' : 'failMessage'}
+          >
+            {emailMessage}
+          </div>
+          <div className="inputMessage">Mobile *</div>
+          <input type="text" name="mobile" onChange={handleInput}></input>
+          <div className="inputMessage">Password *</div>
+          <input type="text" name="password" onChange={handleInput}></input>
+          <div
+            onChange={handleInput}
+            // className={isValidPassword ? 'successMessage' : 'failMessage'}
+          >
+            {passwordMessage}
+          </div>
+          <div className="inputMessage">Confirm Password *</div>
+          <input
+            type="text"
+            name="confirmpassword"
+            onChange={handleInput}
+          ></input>
+          <div
+            onChange={handleInput}
+            // className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
+          >
+            {confirmPasswordMessage}
+          </div>
+        </form>
+        <button
+          // className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
+          type="button"
+          name="submit"
+          onClick={handleButtonValid}
         >
-          {emailMessage}
-        </div>
-        <div className="inputMessage">Mobile *</div>
-        <input type="text" name="mobile" onChange={handleInput}></input>
-        <div className="inputMessage">Password *</div>
-        <input type="text" name="password" onChange={handleInput}></input>
-        <div
-          onChange={handleInput}
-          // className={isValidPassword ? 'successMessage' : 'failMessage'}
-        >
-          {passwordMessage}
-        </div>
-        <div className="inputMessage">Confirm Password *</div>
-        <input
-          type="text"
-          name="confirmpassword"
-          onChange={handleInput}
-        ></input>
-        <div
-          onChange={handleInput}
-          // className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
-        >
-          {confirmPasswordMessage}
-        </div>
-      </form>
-      <button
-        // className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
-        type="button"
-        name="submit"
-        onClick={handleButtonValid}
-      >
-        회원가입
-      </button>
+          회원가입
+        </button>
+      </div>
     </Fragment>
   );
 };
