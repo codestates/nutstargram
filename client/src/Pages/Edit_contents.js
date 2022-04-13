@@ -6,7 +6,7 @@ const Edit_contents = () => {
   const handleEditContent = () => {
     axios({
       method: 'post',
-      url: 'http://localhost4000/write',
+      url: 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
     })
       .then(res => res.json)
       .then(res => {

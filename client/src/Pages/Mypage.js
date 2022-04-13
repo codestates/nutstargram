@@ -1,20 +1,25 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
 axios.defaults.withCredentials = true;
+// const navigate=useNavigate();
 
 const MyPage = props => {
-  const returnProps = props;
-  const { username, user_img, email, mobile } = returnProps.userinfo;
+  const { username, user_img, email, mobile } = props.userinfo;
+  const navigate=useNavigate();
   console.log(user_img);
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
-
-  const fileInput = useRef(null);
+  // function handleEditUserInfo({
+  //   navigate('/edituser');
+  // })
+  const handleEditUserInfo= ()=>{
+    navigate('/edituserinfo');
+  }
 
   return (
     <Mypage>
@@ -26,7 +31,7 @@ const MyPage = props => {
         <FixIndex>연락처 *</FixIndex>
         <MyMobile>{mobile}</MyMobile>
         <EditBtn>
-          <EditBtnLink to="/edituserinfo" activestyle="true">
+          <EditBtnLink onClick={handleEditUserInfo} to="/edituserinfo" activestyle="true">
             내정보 편집하기 :)
           </EditBtnLink>
         </EditBtn>
