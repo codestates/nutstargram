@@ -24,6 +24,7 @@ function App() {
 
   console.log(userinfo);
   const handleLogout = () => {
+
     // console.log('로그아웃?');
     axios.post('http://localhost:4000/signout').then(res => {
       setUserinfo(null);
@@ -60,6 +61,7 @@ function App() {
         setUserinfo(aa);
         handleContents(userinfo.data.data.jwt.id);
       });
+
   };
   // console.log(userinfo);
   const handleLoginSuccess = userInfo => {
@@ -94,6 +96,7 @@ function App() {
         <Route path="/writePage" element={<Write userinfo={userinfo} />} />
         <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
         <Route path="/edituserinfo" element={<Edituserinfo />} />
+
       </Routes>
     </div>
   );

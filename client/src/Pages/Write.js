@@ -105,7 +105,8 @@ const WritePage = ({ userinfo }) => {
       console.log('사진 전송 버튼이 클릭되었습니다.');
       axios
         .post({
-          url: 'http://localhost4000/write',
+          // url: 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
+          url: 'http://localhost:4000/write',
           data: formData,
           headers: {
             'Content-Type': `multipart/form-data; `,
@@ -153,6 +154,7 @@ const WritePage = ({ userinfo }) => {
       console.log('글자 내용이 존재함');
       await axios
         .post(
+          // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
           'http://localhost:4000/write',
           { content_text: write, user_id: 1, content_img: previewImg }, // formData는 객체라서 여기다 집어넣을수가 없음..
           {

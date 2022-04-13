@@ -29,6 +29,7 @@ export default function Login({ handleLoginSuccess }) {
     } else {
       axios
         .post(
+          // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/login',
           'http://localhost:4000/login',
           {
             email: loginInfo.email,
