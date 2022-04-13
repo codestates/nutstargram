@@ -8,20 +8,82 @@ const EditPage = props => {
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
+  const inputUsername = username
+  console.log(inputUsername)
+  const [editUserName, setEditUserName] = useState(username)
+  const [editEmail, setEditEmail] = useState(email)
+  const [editMobile, setEditMobile] = useState(mobile)
+  const [inputValue, setInputValue] = useState({
+    username: inputUsername,
+    email: email,
+    mobile: mobile,
+  });
+
+  const handleInput = event => {
+    const { name, value } = event.target;
+    console.log(value + '   value 입니다.')
+    console.log(name + '   name 입니다.')
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+  }
+
+  const handlePatch = () => {
+    axios({
+      method: 'patch',
+      url: 'http://localhost:4000/edituser',
+      data: data,
+      headers: {
+        'Content-Type': `application/json`,
+        withCredentials: true,
+      },
+    })
+      .then(res => {
+        console.log(res.data);
+      })
+
+      .then(res => {
+        navigate('/mypage');
+        console.log(res.data);
+      })
+      .catch(err => {
+        if (err.message === 'Request failed with status code 409') {
+          alert('이미 존재하는 이메일 입니다');
+        }
+      });
+  }
+
+  
+
+
 
   return (
     <Editpage>
       <EditBody>
-        <EditUserName>{`${username}여기 인풋넣기`}</EditUserName>
+        <button>{handlePatch}</button>
+        <EditUserName 
+        name='username'
+        type="text"
+        onChange={handleInput}
+        ></EditUserName>
         {/* username 변경 공간 */}
         <img src={Image} style={{ margin: '20px' }} width="100" height="100" />
         <EditImgBtn>여기 프로필 이미지 수정 버튼</EditImgBtn>
         {/* 로컬에서 이미지 선택해서 반영시킬 공간 */}
         <FixIndex>이메일 *</FixIndex>
-        <EditEmail>{`${email}여기 인풋넣기`}</EditEmail>
+        <EditEmail 
+        name='email'
+        type="text"
+        onChange={handleInput}
+        />
         {/* 이메일 변경 공간 */}
         <FixIndex>연락처 *</FixIndex>
-        <EditMobile>{`${mobile}여기 인풋넣기`}</EditMobile>
+        <EditMobile
+        name='mobile' 
+        type="text"
+        onChange={handleInput}
+        />
         {/* 모바일 변경 공간 */}
         <EditBtn>
           <NavLink to="/mypage" activeStyle="true">
@@ -50,7 +112,7 @@ const EditBody = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 `;
 
-const EditUserName = styled.div`
+const EditUserName = styled.input`
   font-size: larger;
   font-weight: bold;
   color: grey;
@@ -59,7 +121,7 @@ const EditUserName = styled.div`
 
 const EditImgBtn = styled.div``;
 
-const EditEmail = styled.div`
+const EditEmail = styled.input`
   width: 220px;
   height: 32px;
   box-sizing: border-box;
@@ -72,7 +134,7 @@ const EditEmail = styled.div`
   margin: auto;
 `;
 
-const EditMobile = styled.div`
+const EditMobile = styled.input`
   width: 220px;
   height: 32px;
   box-sizing: border-box;
