@@ -1,35 +1,117 @@
 import React, { useState } from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
-import Edit_contents from '../Pages/Edit_contents';
-import MyPage from '../Pages/Mypage';
-import WritePage from '../Pages/Write';
-import Login from '../Pages/Login';
+import { Route, Routes, NavLink as Link } from 'react-router-dom';
+import styled from 'styled-components';
+import LogoImg from '../almonds.png';
 
-export default function Nav() {
+export default function Navbar() {
   return (
-    <div>
-      개발자님, 안녕하세요. 안녕 못합니다...
-      <br />
-      <Link to="/login">
-        <button type="button">로그아웃</button>
-      </Link>
-      <Link to="/Edit_contents">
-        <button type="button">Edit Contents!</button>
-      </Link>
-      <Link to="/mypage">
-        <button type="button">MyPage</button>
-      </Link>
-      <Link to="/WritePage">
-        <button type="button">일기를 써보자!</button>
-      </Link>
-      {/* <Routes> */}
-      {/* <Route path="/login*" element={<Login />} /> */}
-      {/* <Route path="/Edit_contents" element={<Edit_contents />} /> */}
-      {/* <Route path="/MyPage" element={<MyPage />} /> */}
-      {/* <Route path="/WritePage" element={<WritePage />} /> */}
-      {/* </Routes> */}
-      {/* Nav Bar 를 app단 위에 항상 띄우는 방식의 구현을 해보려 합니다. */}
-      {/* Nav Bar의 Routes 를 살려두면 페이지에 2번 렌더링 되는 모습을 볼 수 있습니다 :) */}
-    </div>
+    <Nav>
+      <NavLogo to="/" activestyle="true">
+        <img src={LogoImg} alt="LogoImg" width="50" height="50" />
+      </NavLogo>
+      <NavMenu>
+        <NavLink to="/WritePage" activestyle="true">
+          일기를 써보자!
+        </NavLink>
+        <NavLink to="/Edit_contents" activestyle="true">
+          편집하자!
+        </NavLink>
+        <NavLink to="/mypage" activestyle="true">
+          마이페이지!!
+        </NavLink>
+      </NavMenu>
+      <NavBtn>
+        <NavBtnLink to="/login">log out</NavBtnLink>
+      </NavBtn>
+    </Nav>
   );
 }
+
+const Nav = styled.nav`
+  background: #edc6c0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem calc((100vw - 1000px) / 2);
+  z-index: 10;
+`;
+
+const NavLink = styled(Link)`
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem;
+  height: 100%;
+  cursor: pointer;
+
+  &.active {
+    color: #e29091;
+  }
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    color: #e29091;
+  }
+`;
+
+const NavMenu = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: -24px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const NavBtn = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+
+  @media screen and (max-width: 768px) {
+    dispaly: none;
+  }
+`;
+
+const NavBtnLink = styled(Link)`
+  border-radius: 4px;
+  background: #f9aa83;
+  padding: 10px 22px;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #f9aa83;
+  }
+`;
+
+const NavLogo = styled(Link)`
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0.5rem;
+  height: 100%;
+  cursor: pointer;
+  filter: invert(100%);
+  margin-left: 24px;
+
+  &.active {
+    color: #e29091;
+  }
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    filter: invert(50%);
+    /* filter: opacity(0.5) drop-shadow(0 0 0 #ff0000); */
+  }
+`;

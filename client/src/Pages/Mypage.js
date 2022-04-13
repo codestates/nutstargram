@@ -1,28 +1,123 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Routes, Route, EditBtnLink as Link } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 
 axios.defaults.withCredentials = true;
 
-const MyPage = () => {
-  // axios({
-  //   method: 'get',
-  //   url: 'http://localhost:4000/userinfo',
-  // })
-  //   .then(res => {
-  //     console.log('~~~~~~~~', res);
-  //   })
-  //   .catch(err => console.log(err.message));
+const MyPage = props => {
+  const returnProps = props;
+  const { username, user_img, email, mobile } = returnProps.userinfo;
+  console.log(user_img);
+  const [Image, setImage] = useState(
+    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+  );
+
+  const fileInput = useRef(null);
+
   return (
-    <div>
-      <Link to="/edituserinfo">
-        <button type="button">내정보 편집하깅 :)</button>
-      </Link>
-      <div>마이페이지</div>
-      <div>마이마이한 내용</div>
-      <h1>Users</h1>
-    </div>
+    <Mypage>
+      <MyBody>
+        <MyHeader>{`${username}님 안녕하세요!`}</MyHeader>
+        <img src={Image} style={{ margin: '20px' }} width="100" height="100" />
+        <FixIndex>이메일 *</FixIndex>
+        <MyEmail>{email}</MyEmail>
+        <FixIndex>연락처 *</FixIndex>
+        <MyMobile>{mobile}</MyMobile>
+        <EditBtn>
+          <EditBtnLink to="/edituserinfo" activestyle="true">
+            내정보 편집하기 :)
+          </EditBtnLink>
+        </EditBtn>
+      </MyBody>
+    </Mypage>
   );
 };
 
 export default MyPage;
+
+const Mypage = styled.div`
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+`;
+
+const MyBody = styled.div`
+  position: relative;
+  margin: 5% auto;
+  height: 450px;
+  width: 400px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+`;
+
+const MyHeader = styled.div`
+  font-size: larger;
+  font-weight: bold;
+  color: grey;
+  padding: 20px;
+`;
+
+const MyImg = styled.div``;
+
+const MyEmail = styled.div`
+  width: 220px;
+  height: 32px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #aaa;
+  font-size: 15px;
+  margin: auto;
+`;
+
+const MyMobile = styled.div`
+  width: 220px;
+  height: 32px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #aaa;
+  font-size: 15px;
+  margin: auto;
+`;
+
+const EditBtn = styled.div`
+  flex-direction: row-reverse;
+  align-items: center;
+  position: relative;
+  margin: 24px;
+
+  @media screen and (max-width: 768px) {
+    dispaly: none;
+  }
+`;
+
+const EditBtnLink = styled.div`
+  border-radius: 4px;
+  background: #f9aa83;
+  padding: 10px 22px;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #f9aa83;
+  }
+`;
+
+const FixIndex = styled.div`
+  font-size: medium;
+  font-weight: bold;
+  color: grey;
+  padding-top: 20px;
+`;
