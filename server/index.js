@@ -19,7 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: 'http://localhost:3000', // http://nutstagram.s3-website.ap-northeast-2.amazonaws.com
+    // origin: 'http://nutstagram.s3-website.ap-northeast-2.amazonaws.com',
+    origin: 'http://localhost:3000',
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   }),

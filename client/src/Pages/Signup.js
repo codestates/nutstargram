@@ -1,14 +1,11 @@
 /* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
-  let navigate = useNavigate();
-
   const [inputValue, setInputValue] = useState({
     username: '',
     email: '',
@@ -105,6 +102,7 @@ const SignUpPage = () => {
 
     axios({
       method: 'post',
+      // url: 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/signup',
       url: 'http://localhost:4000/signup',
       data: data,
       headers: {
@@ -115,67 +113,62 @@ const SignUpPage = () => {
       .then(res => {
         console.log(res.data);
       })
-
-      .then(res => {
-        navigate('/login');
-        console.log(res.data);
-      })
       .catch(err => {
         if (err.message === 'Request failed with status code 409') {
-          alert('이미 존재하는 이메일 입니다');
+          alert('폰넘버는 숫자로만 주세요');
         }
       });
+    // }
   };
 
   return (
     <Fragment>
-      <div className="top">
-        <h1>회원가입 페이지 입니다</h1>
-        {/* input type text or textarea */}
-        <form name="all" className="signUpInput">
-          <div className="inputMessage">User Name *</div>
-          <input type="text" name="username" onChange={handleInput}></input>
-          <div className="inputMessage">Email *</div>
-          <input type="text" name="email" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            // className={isValidEmail ? 'successMessage' : 'failMessage'}
-          >
-            {emailMessage}
-          </div>
-          <div className="inputMessage">Mobile *</div>
-          <input type="text" name="mobile" onChange={handleInput}></input>
-          <div className="inputMessage">Password *</div>
-          <input type="text" name="password" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            // className={isValidPassword ? 'successMessage' : 'failMessage'}
-          >
-            {passwordMessage}
-          </div>
-          <div className="inputMessage">Confirm Password *</div>
-          <input
-            type="text"
-            name="confirmpassword"
-            onChange={handleInput}
-          ></input>
-          <div
-            onChange={handleInput}
-            // className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
-          >
-            {confirmPasswordMessage}
-          </div>
-        </form>
-        <button
-          // className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
-          type="button"
-          name="submit"
-          onClick={handleButtonValid}
+      <h1>회원가입 페이지 입니다</h1>
+      {/* input type text or textarea */}
+      <form name="all" className="signUpInput">
+        <div className="inputMessage">User Name *</div>
+        <input type="text" name="username" onChange={handleInput}></input>
+        <div className="inputMessage">Email *</div>
+        <input type="text" name="email" onChange={handleInput}></input>
+        <div
+          onChange={handleInput}
+          // className={isValidEmail ? 'successMessage' : 'failMessage'}
         >
-          회원가입
-        </button>
-      </div>
+          {emailMessage}
+        </div>
+        <div className="inputMessage">Mobile *</div>
+        <input type="text" name="mobile" onChange={handleInput}></input>
+        <div className="inputMessage">Password *</div>
+        <input type="text" name="password" onChange={handleInput}></input>
+        <div
+          onChange={handleInput}
+          // className={isValidPassword ? 'successMessage' : 'failMessage'}
+        >
+          {passwordMessage}
+        </div>
+        <div className="inputMessage">Confirm Password *</div>
+        <input
+          type="text"
+          name="confirmpassword"
+          onChange={handleInput}
+        ></input>
+        <div
+          onChange={handleInput}
+          // className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
+        >
+          {confirmPasswordMessage}
+        </div>
+      </form>
+      <button
+        // className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
+        type="button"
+        name="submit"
+        onClick={handleButtonValid}
+      >
+        회원가입
+      </button>
     </Fragment>
   );
-  }
+};
+
 export default SignUpPage;

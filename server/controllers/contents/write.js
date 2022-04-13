@@ -1,4 +1,3 @@
-const multer = require('multer');
 const path = require('path');
 const express = require('express');
 const bodyparser = require('body-parser');
