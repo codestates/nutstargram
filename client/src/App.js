@@ -1,5 +1,5 @@
 import './App.css';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Login from './Pages/Login';
@@ -20,50 +20,61 @@ function App() {
     email: '',
     mobile: '',
   });
+  const [content, setContent] = useState([]);
+
+  console.log(userinfo);
+  const handleLogout = () => {
+
+    // console.log('로그아웃?');
+    axios.post('http://localhost:4000/signout').then(res => {
+      setUserinfo(null);
+      setLogin(false);
+      Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
+    });
+  };
+  // console.log(userinfo.id); // 숫자 찍힘
+  const handleContents = user_id => {
+    axios
+      .post(
+        'http://localhost:4000/main',
+        {
+          user_id,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
+      )
+      .then(post => {
+        console.log(post.data);
+        setContent(post.data);
+      });
+  };
+  // console.log(content);
+  const isAuthorized = () => {
+    axios
+      .get('http://localhost:4000/auth', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then(aa => {
+        setUserinfo(aa);
+        handleContents(userinfo.data.data.jwt.id);
+      });
+
+  };
+  // console.log(userinfo);
   const handleLoginSuccess = userInfo => {
     // console.log('app.js', userInfo.data.data.id); 디비속 유저의 아이디값이 나옵니다
     setLogin(true);
-    setUserinfo({
-      id: userInfo.data.data.id,
-      username: userInfo.data.data.username,
-      user_img: userInfo.data.data.user_img,
-      email: userInfo.data.data.email,
-      mobile: userInfo.data.data.mobile,
-    });
+    isAuthorized();
   };
-  const [content, setContent] = useState({
-    // 여기서 contents를 관리하고 db에서 받아온 뒤 main page에 Props로 내려줘서 렌더링 할 것입니다.
-    user_id: '',
-    content_img: [],
-    content_text: '',
-    content_emoji: null,
-    content_weather: null,
-  });
-  const [isLogin, setIsLogin] = useState(true);
-  const handleUserInfo = () => {};
 
-  const handleLogout = () => {
-    console.log('로그아웃?');
-    axios
-      .post(
-        // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/signout',
-        'http://localhost:4000/signout',
-      )
-      .then(res => {
-        setUserinfo(null);
-        setIsLogin(false);
-        Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
-      });
-  };
-  const handleContents = () => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:4000/',
-      // url: 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com',
-    }).then(res => {
-      console.log(res.data);
-    });
-  };
+  useEffect(() => {
+    isAuthorized();
+    // console.log(userinfo);
+  }, []);
+
   // element={<Signup username={userinfo.username}
   return (
     <div className="App">
@@ -78,19 +89,14 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/main"
-          element={<Main handleContents={handleContents} />}
-        />
+        <Route path="/" />
+        <Route path="/main" element={<Main content={content} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/writePage" element={<Write />} />
+        <Route path="/writePage" element={<Write userinfo={userinfo} />} />
         <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
-        <Route
-          path="/edituserinfo"
-          element={<Edituserinfo userinfo={userinfo} />}
-        />
+        <Route path="/edituserinfo" element={<Edituserinfo />} />
+
       </Routes>
     </div>
   );

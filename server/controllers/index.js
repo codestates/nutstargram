@@ -8,4 +8,5 @@ module.exports = {
   signup: require('./user/signup'),
   edituser: require('./userinfo/edituser'),
   userinfo: require('./userinfo/userinfo'),
+  auth: require('./userinfo/auth'),
 };

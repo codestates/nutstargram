@@ -1,4 +1,5 @@
 const { users } = require('../../models');
+const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = async (req, res) => {
   // rep 에 이메일 받으면??
@@ -21,6 +22,7 @@ module.exports = async (req, res) => {
   });
   if (mainUser) {
     // console.log(mainUser);
+    const jwt = isAuthorized(userToken);
     res.status(200).send({ data: { userInfo: mainUser }, message: 'ok' });
     // console.log(res);
   } else {

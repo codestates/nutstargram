@@ -39,7 +39,8 @@ app.post('/oauth', controllers.oauth);
 app.post('/signup', controllers.signup);
 app.patch('/edituser', controllers.edituser);
 app.get('/userinfo', controllers.userinfo);
-app.get('/main', controllers.main);
+app.post('/main', controllers.main);
+app.get('/auth', controllers.auth);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 80;
 
