@@ -1,10 +1,14 @@
+/* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
+  let navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState({
     username: '',
     email: '',
@@ -111,12 +115,16 @@ const SignUpPage = () => {
       .then(res => {
         console.log(res.data);
       })
+
+      .then(res => {
+        navigate('/login');
+        console.log(res.data);
+      })
       .catch(err => {
         if (err.message === 'Request failed with status code 409') {
-          alert('폰넘버는 숫자로만 주세요');
+          alert('이미 존재하는 이메일 입니다');
         }
       });
-    // }
   };
 
   return (
@@ -169,6 +177,5 @@ const SignUpPage = () => {
       </div>
     </Fragment>
   );
-};
-
+  }
 export default SignUpPage;

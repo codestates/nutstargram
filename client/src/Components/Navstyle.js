@@ -1,43 +1,17 @@
 /* eslint-disable */
-import React, { useState } from 'react';
-import { Route, Routes, NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
-import LogoImg from '../almonds.png';
+import { NavLink as Link } from 'react-router-dom';
 
-const NavBar = props => {
-  const returnProps = props;
-  return (
-    <Nav>
-      <NavLogo to="/" activestyle="true">
-        <img src={LogoImg} alt="LogoImg" width="50" height="50" />
-      </NavLogo>
-      <NavMenu>
-        <NavLink to="/WritePage" activestyle="true">
-          일기를 써보자!
-        </NavLink>
-        <NavLink to="/Edit_contents" activestyle="true">
-          편집하자!
-        </NavLink>
-        <NavLink to="/mypage" activestyle="true">
-          마이페이지!!
-        </NavLink>
-      </NavMenu>
-      <NavBtn>
-        <NavBtnLink to="/login" onClick={returnProps.handleLogout}>log out</NavBtnLink>
-      </NavBtn>
-    </Nav>
-  );
-}
-
-const Nav = styled.nav`
+export const Nav = styled.nav`
   background: #edc6c0;
+  height: px;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc((100vw - 1000px) / 2);
   z-index: 10;
 `;
 
-const NavLink = styled(Link)`
+export const NavLink = styled(Link)`
   font-weight: bold;
   color: #fff;
   display: flex;
@@ -57,7 +31,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const NavMenu = styled.div`
+export const NavMenu = styled.div`
   display: flex;
   align-items: center;
   margin-right: -24px;
@@ -67,7 +41,7 @@ const NavMenu = styled.div`
   }
 `;
 
-const NavBtn = styled.div`
+export const NavBtn = styled.div`
   display: flex;
   align-items: center;
   margin-right: 24px;
@@ -77,7 +51,7 @@ const NavBtn = styled.div`
   }
 `;
 
-const NavBtnLink = styled(Link)`
+export const NavBtnLink = styled(Link)`
   border-radius: 4px;
   background: #f9aa83;
   padding: 10px 22px;
@@ -95,7 +69,7 @@ const NavBtnLink = styled(Link)`
   }
 `;
 
-const NavLogo = styled(Link)`
+export const NavLogo = styled(Link)`
   font-weight: bold;
   color: #fff;
   display: flex;
@@ -117,4 +91,3 @@ const NavLogo = styled(Link)`
     /* filter: opacity(0.5) drop-shadow(0 0 0 #ff0000); */
   }
 `;
-export default NavBar;
