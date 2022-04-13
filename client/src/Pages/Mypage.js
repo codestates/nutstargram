@@ -7,14 +7,12 @@ import styled from 'styled-components';
 axios.defaults.withCredentials = true;
 
 const MyPage = props => {
-  const returnProps = props;
-  const { username, user_img, email, mobile } = returnProps.userinfo;
-  console.log(user_img);
+  //console.log(props);
+  const { username, user_img, email, mobile } = props.userinfo;
+  //console.log(user_img);
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
-
-  const fileInput = useRef(null);
 
   return (
     <Mypage>
@@ -27,7 +25,7 @@ const MyPage = props => {
         <MyMobile>{mobile}</MyMobile>
         <EditBtn>
           <EditBtnLink to="/edituserinfo" activestyle="true">
-            내정보 편집하기 :)
+            내정보 편집하기
           </EditBtnLink>
         </EditBtn>
       </MyBody>

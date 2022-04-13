@@ -2,21 +2,27 @@
 import React, { Component, Routes, Route, BrowserRouter } from 'react';
 import styled from 'styled-components';
 
-const MainPage = ({ userinfo }) => {
-  // 일단 app.js 에서 프롭스로 유저정보를 받아오고
-  //axios에서  유저아이디 넣어서 get요청
-  console.log(userinfo);
-
+const MainPage = ({ userinfo, content }) => {
+  console.log(content);
   return (
     <div className="Main">
-      <br />
       <div>
         <h1>메인페이지 입니다.</h1>
         <h3>scroll container</h3>
-        <PostContainer>
-          <PostImg></PostImg>
-          <PostText></PostText>
-        </PostContainer>
+        <div>
+          {content ? (
+            content.map(post => {
+              return (
+                <div key={post.id}>
+                  <PostImg>{post.content_img}</PostImg>
+                  <PostText>{post.content_text}</PostText>
+                </div>
+              );
+            })
+          ) : (
+            <div>로그인</div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -30,7 +36,9 @@ const PostContainer = styled.div`
   border-radius: 6px;
 `;
 
-const PostImg = styled.div``;
+const PostImg = styled.div`
+  border: 1px black solid;
+`;
 const PostText = styled.div``;
 
 export default MainPage;

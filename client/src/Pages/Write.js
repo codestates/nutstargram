@@ -3,7 +3,8 @@ import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const WritePage = props => {
+// eslint-disable-next-line react/prop-types
+const WritePage = ({ userinfo }) => {
   // Styled component
   const Container = styled.div`
     img {
@@ -12,6 +13,7 @@ const WritePage = props => {
       //object-fit: cover; 이거 쓰면 이미지 짤림
     }
   `;
+  console.log(userinfo);
   const [contents, setContents] = useState({
     user_id: '',
     content_img: [],
@@ -25,8 +27,6 @@ const WritePage = props => {
   const [previewImg, setPreviewImg] = useState(null); // 미리보기 이미지 구현을 위한 데이터를 받을 state
 
   const [write, setWrite] = useState('');
-
-  const returnProps = props;
 
   const handleTextChange = e => {
     setWrite(e.target.value);
