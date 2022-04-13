@@ -44,16 +44,22 @@ function App() {
 
   const handleLogout = () => {
     console.log('로그아웃?');
-    axios.post('http://localhost:4000/signout').then(res => {
-      setUserinfo(null);
-      setIsLogin(false);
-      Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
-    });
+    axios
+      .post(
+        // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/signout',
+        'http://localhost:4000/signout',
+      )
+      .then(res => {
+        setUserinfo(null);
+        setIsLogin(false);
+        Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
+      });
   };
   const handleContents = () => {
     axios({
       method: 'get',
       url: 'http://localhost:4000/',
+      // url: 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com',
     }).then(res => {
       console.log(res.data);
     });

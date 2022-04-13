@@ -1,14 +1,27 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Route, Routes, NavLink as Link } from 'react-router-dom';
+
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components';
 
+axios.defaults.withCredentials = true;
+// const navigate=useNavigate();
 
 const MyPage = props => {
   const { username, user_img, email, mobile } = props.userinfo;
+  const navigate=useNavigate();
+  console.log(user_img);
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
+  // function handleEditUserInfo({
+  //   navigate('/edituser');
+  // })
+  const handleEditUserInfo= ()=>{
+    navigate('/edituserinfo');
+  }
+
 
   return (
     <Mypage>
