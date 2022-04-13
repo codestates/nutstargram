@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
@@ -7,7 +6,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [inputValue, setInputValue] = useState({
     username: '',
@@ -30,6 +29,11 @@ const SignUpPage = () => {
 
   const { username, email, mobile, password, confirmpassword } = inputValue;
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModalHandler = () => {
+    setIsOpen(!isOpen);
+  };
   // const isValidEmail = email.includes('@') && email.includes('.');
   // // email 검사 : @ 와 . 포함 될 것
   // const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
@@ -171,11 +175,12 @@ const SignUpPage = () => {
           type="button"
           name="submit"
           onClick={handleButtonValid}
+          // data-dismiss="Modal"
         >
           회원가입
         </button>
       </div>
     </Fragment>
   );
-  }
+};
 export default SignUpPage;

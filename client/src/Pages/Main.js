@@ -2,11 +2,11 @@
 import React, { Component, Routes, Route, BrowserRouter } from 'react';
 import styled from 'styled-components';
 
-const MainPage = ({ userinfo }) => {
+const MainPage = ({ userinfo, content }) => {
   // 일단 app.js 에서 프롭스로 유저정보를 받아오고
   //axios에서  유저아이디 넣어서 get요청
   console.log(userinfo);
-
+  console.log(content); //props로는 잘 내려와지는데... app에서 빨리 정보를 업데이트 받아야한다. 
   return (
     <div className="Main">
       <br />

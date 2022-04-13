@@ -9,7 +9,7 @@ import Mypage from './Pages/Mypage';
 import NavBar from './Components/Nav';
 import Edituserinfo from './Pages/Edit_userInfo';
 import Signup from './Pages/Signup';
-
+import Edit_contents from './Pages/Edit_contents';
 // axios.defaults.withCredentials = true;
 function App() {
   const [islogin, setLogin] = useState(false);
@@ -51,13 +51,23 @@ function App() {
     });
   };
   const handleContents = () => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:4000/',
-    }).then(res => {
-      console.log(res.data);
+    // axios({
+    //   method: 'get',
+    //   url: 'http://localhost:4000/',
+    // }).then(res => {
+    //   console.log(res.data);
+    // });
+    setContent({
+      user_id: '',
+      content_img: [],
+      content_text: '',
+      content_emoji: null,
+      content_weather: null,
     });
   };
+
+  const [modalOpen, setModalOpen] = useState(false);
+
   // element={<Signup username={userinfo.username}
   return (
     <div className="App">
@@ -75,13 +85,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route
           path="/main"
-          element={<Main handleContents={handleContents} />}
+          element={<Main handleContents={handleContents} content={content} />}
         />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup modalOpen={modalOpen} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/edituserinfo" element={<Edituserinfo />} />
+        <Route path="/editcontents" element={<Edit_contents />} />
       </Routes>
     </div>
   );
