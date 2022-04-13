@@ -51,8 +51,12 @@ function App() {
     });
   };
   const handleContents = () => {
-    axios.get('http://localhost:4000/');
-    console.log('nope');
+    axios({
+      method: 'get',
+      url: 'http://localhost:4000/',
+    }).then(res => {
+      console.log(res.data);
+    });
   };
   // element={<Signup username={userinfo.username}
   return (
