@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       user_img: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB,
       },
       mobile: {
         type: Sequelize.INTEGER,

@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { Component, Routes, Route, BrowserRouter } from 'react';
 import styled from 'styled-components';
-import Nav from '../Components/Nav';
 
 const MainPage = ({ userinfo }) => {
   // 일단 app.js 에서 프롭스로 유저정보를 받아오고

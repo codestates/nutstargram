@@ -175,6 +175,5 @@ const SignUpPage = () => {
       </button>
     </Fragment>
   );
-};
-
+  }
 export default SignUpPage;

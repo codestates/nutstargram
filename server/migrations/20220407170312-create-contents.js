@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       content_img: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB,
       },
       content_text: {
         type: Sequelize.STRING,

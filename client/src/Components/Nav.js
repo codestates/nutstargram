@@ -4,7 +4,8 @@ import { Route, Routes, Link } from 'react-router-dom';
 import { Nav, NavLink, NavMenu, NavBtn, NavBtnLink, NavLogo } from './Navstyle';
 import LogoImg from '../almonds.png';
 
-export default function Navbar() {
+ const NavBar = props => {
+  const returnProps = props;
   return (
     <Nav>
       <NavLogo to="/" activestyle="true">
@@ -22,8 +23,9 @@ export default function Navbar() {
         </NavLink>
       </NavMenu>
       <NavBtn>
-        <NavBtnLink to="/login">log out</NavBtnLink>
+        <NavBtnLink to="/login" onClick={returnProps.handleLogout}>log out</NavBtnLink>
       </NavBtn>
     </Nav>
   );
-}
+};
+export default NavBar;
