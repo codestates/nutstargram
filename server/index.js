@@ -19,12 +19,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: 'http://nutstagram.s3-website.ap-northeast-2.amazonaws.com',
+    origin: 'http://localhost:3000', // http://nutstagram.s3-website.ap-northeast-2.amazonaws.com
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   }),
 );
-
+// 'http://nutstagram.s3-website.ap-northeast-2.amazonaws.com',
 app.get('/', (req, res) => {
   res.status(201).send('Hello World');
 });
@@ -52,7 +52,7 @@ const HTTPS_PORT = process.env.HTTPS_PORT || 80;
 //   server.listen(HTTPS_PORT, () => console.log('https server runnning'));
 // } else {
 const server = app.listen(HTTPS_PORT, () =>
-  console.log('http server runnning'),
+  console.log('http server runnning~~'),
 );
 // }
 module.exports = server;
