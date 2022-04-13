@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
+
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -21,6 +22,7 @@ const MyPage = props => {
     navigate('/edituserinfo');
   }
 
+
   return (
     <Mypage>
       <MyBody>
@@ -31,9 +33,9 @@ const MyPage = props => {
         <FixIndex>연락처 *</FixIndex>
         <MyMobile>{mobile}</MyMobile>
         <EditBtn>
-          <EditBtnLink onClick={handleEditUserInfo} to="/edituserinfo" activestyle="true">
-            내정보 편집하기 :)
-          </EditBtnLink>
+          <NavLink to="/edituserinfo" activestyle="true">
+            내정보 편집하기
+          </NavLink>
         </EditBtn>
       </MyBody>
     </Mypage>
@@ -103,7 +105,7 @@ const EditBtn = styled.div`
   }
 `;
 
-const EditBtnLink = styled.div`
+const NavLink = styled(Link)`
   border-radius: 4px;
   background: #f9aa83;
   padding: 10px 22px;
