@@ -8,11 +8,11 @@ const EditPage = props => {
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
-  const inputUsername = username
-  console.log(inputUsername)
-  const [editUserName, setEditUserName] = useState(username)
-  const [editEmail, setEditEmail] = useState(email)
-  const [editMobile, setEditMobile] = useState(mobile)
+  const inputUsername = username;
+  console.log(inputUsername);
+  const [editUserName, setEditUserName] = useState(username);
+  const [editEmail, setEditEmail] = useState(email);
+  const [editMobile, setEditMobile] = useState(mobile);
   const [inputValue, setInputValue] = useState({
     username: inputUsername,
     email: email,
@@ -21,13 +21,13 @@ const EditPage = props => {
 
   const handleInput = event => {
     const { name, value } = event.target;
-    console.log(value + '   value 입니다.')
-    console.log(name + '   name 입니다.')
+    console.log(value + '   value 입니다.');
+    console.log(name + '   name 입니다.');
     setInputValue({
       ...inputValue,
       [name]: value,
     });
-  }
+  };
 
   const handlePatch = () => {
     axios({
@@ -40,10 +40,6 @@ const EditPage = props => {
       },
     })
       .then(res => {
-        console.log(res.data);
-      })
-
-      .then(res => {
         navigate('/mypage');
         console.log(res.data);
       })
@@ -52,38 +48,26 @@ const EditPage = props => {
           alert('이미 존재하는 이메일 입니다');
         }
       });
-  }
-
-  
-
-
+  };
 
   return (
     <Editpage>
       <EditBody>
         <button>{handlePatch}</button>
-        <EditUserName 
-        name='username'
-        type="text"
-        onChange={handleInput}
+        <EditUserName
+          name="username"
+          type="text"
+          onChange={handleInput}
         ></EditUserName>
         {/* username 변경 공간 */}
         <img src={Image} style={{ margin: '20px' }} width="100" height="100" />
         <EditImgBtn>여기 프로필 이미지 수정 버튼</EditImgBtn>
         {/* 로컬에서 이미지 선택해서 반영시킬 공간 */}
         <FixIndex>이메일 *</FixIndex>
-        <EditEmail 
-        name='email'
-        type="text"
-        onChange={handleInput}
-        />
+        <EditEmail name="email" type="text" onChange={handleInput} />
         {/* 이메일 변경 공간 */}
         <FixIndex>연락처 *</FixIndex>
-        <EditMobile
-        name='mobile' 
-        type="text"
-        onChange={handleInput}
-        />
+        <EditMobile name="mobile" type="text" onChange={handleInput} />
         {/* 모바일 변경 공간 */}
         <EditBtn>
           <NavLink to="/mypage" activeStyle="true">
@@ -182,68 +166,3 @@ const FixIndex = styled.div`
   color: grey;
   padding-top: 20px;
 `;
-=======
-import axios from 'axios';
-import React, { useEffect ,useState} from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
-
-const Edit_userInfo= (userinfo) => {
-  console.log(userinfo)
-  const [userInfo,setUserInfo]=useState({
-    username:userinfo.username,
-    user_img:userinfo.user_img,
-    mobile:userinfo.mobile,
-    password:userinfo.password,
-  });
-  console.log(userInfo.username);
-
-const handleEditPage = (event) => {
-
-  if(event.target.name ) setUserInfo({...userInfo, [event.taget.name]:event.taget.value});
-  console.log(userInfo);
-
-  editUser = (event) =>{
-    event.preventDefault()
-    const userEdit = this.state.userinfo
-  }
-
-  axios({
-    method:'patch',
-    //url:'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/edituser'
-    url: 'http://loaclhost:4000/edituser',
-  })
-    .then(res => res.json)
-     .then(res => {
-       if (res.message === 'ok') {
-         console.log('ok');
-         Navigate('/mypage');
-       }
-      });
-  };
-  return (
-    <div>
-      <Link to="/mypage">
-        <button type="button"> {`<-- 뒤로가기`} </button>
-      </Link>
-      수정할 내용
-      <button type="btn-edituserinfo" onClick={handleEditPage}>저장하기</button>
-      {/* 저장 완료 되었습니다. */}
-    </div>
-  );
-};
-
-export default Edit_userInfo;
-
-// const userInfo = props.
-
-// useEffect로 업데이트?
-// const [userInfo,setUserInfo] =useState({})
-// handleEdit=()=>{}
-// useEffect(()=>{
-//  setUserInfo({'username':userInfo,'email':userInfo.email, ...})
-//  })
-
-// 다른방법
-// https://github.com/silverairplan/jitsimeet/blob/a76910f0b8fab293fbb99956deaa270e56461ccd/react/features/frontend/components/components/profile/profile.js
-

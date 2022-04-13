@@ -1,6 +1,6 @@
 import './App.css';
 import { React, useState, useEffect } from 'react';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Login from './Pages/Login';
 import Main from './Pages/Main';
@@ -12,6 +12,7 @@ import Signup from './Pages/Signup';
 
 // axios.defaults.withCredentials = true;
 function App() {
+  const navigate = useNavigate();
   const [islogin, setLogin] = useState(false);
   const [userinfo, setUserinfo] = useState({
     id: '',
@@ -22,14 +23,13 @@ function App() {
   });
   const [content, setContent] = useState([]);
 
-  console.log(userinfo);
+  // console.log(userinfo);
   const handleLogout = () => {
-
     // console.log('로그아웃?');
-    axios.post('http://localhost:4000/signout').then(res => {
+    axios.post('http://localhost:4000/logout').then(res => {
       setUserinfo(null);
       setLogin(false);
-      Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
+      navigate('/login'); // '/login' 페이지로 이동시켜야한다.
     });
   };
   // console.log(userinfo.id); // 숫자 찍힘
@@ -46,7 +46,6 @@ function App() {
         },
       )
       .then(post => {
-        console.log(post.data);
         setContent(post.data);
       });
   };
@@ -61,10 +60,9 @@ function App() {
         setUserinfo(aa);
         handleContents(userinfo.data.data.jwt.id);
       });
-
   };
   // console.log(userinfo);
-  const handleLoginSuccess = userInfo => {
+  const handleLoginSuccess = () => {
     // console.log('app.js', userInfo.data.data.id); 디비속 유저의 아이디값이 나옵니다
     setLogin(true);
     isAuthorized();
@@ -78,26 +76,23 @@ function App() {
   // element={<Signup username={userinfo.username}
   return (
     <div className="App">
-      {islogin ? (
-        <div>
-          <NavBar />
-          <Main userinfo={userinfo} />
-        </div>
-      ) : (
-        <div>
-          <Login handleLoginSuccess={handleLoginSuccess} />
-        </div>
-      )}
-      <Routes>
-        <Route path="/" />
-        <Route path="/main" element={<Main content={content} />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/writePage" element={<Write userinfo={userinfo} />} />
-        <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
-        <Route path="/edituserinfo" element={<Edituserinfo />} />
+      <NavBar handleLogout={handleLogout} />
 
-      </Routes>
+      {!islogin ? (
+        <Login handleLoginSuccess={handleLoginSuccess} />
+      ) : (
+        <Routes>
+          <Route
+            path="/main"
+            element={<Main content={content} userinfo={userinfo} />}
+          />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/writePage" element={<Write userinfo={userinfo} />} />
+          <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
+          <Route path="/edituserinfo" element={<Edituserinfo />} />
+        </Routes>
+      )}
     </div>
   );
 }

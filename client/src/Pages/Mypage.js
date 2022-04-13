@@ -9,20 +9,20 @@ axios.defaults.withCredentials = true;
 // const navigate=useNavigate();
 
 const MyPage = props => {
-
-  const { username, user_img, email, mobile } = props.userinfo;
-  const navigate=useNavigate();
-  console.log(user_img);
+  const { username, user_img, email, mobile } = props.userinfo.data.data.jwt;
+  const navigate = useNavigate();
 
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
+  console.log(Image);
+
   // function handleEditUserInfo({
   //   navigate('/edituser');
   // })
-  const handleEditUserInfo= ()=>{
+  const handleEditUserInfo = () => {
     navigate('/edituserinfo');
-  }
+  };
   return (
     <Mypage>
       <MyBody>
@@ -33,11 +33,9 @@ const MyPage = props => {
         <FixIndex>연락처 *</FixIndex>
         <MyMobile>{mobile}</MyMobile>
         <EditBtn>
-
           <NavLink to="/edituserinfo" activestyle="true">
             내정보 편집하기
           </NavLink>
-
         </EditBtn>
       </MyBody>
     </Mypage>
