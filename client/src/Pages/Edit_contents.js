@@ -46,6 +46,12 @@ const Edit_contents = content => {
       data: { content_text: editWrite, content_img: editImg, user_id: 1 },
       headers: { 'Content-Type': 'application/json', withCredentials: true },
     })
+      // const Edit_contents = () => {
+      //   const handleEditContent = () => {
+      //     axios({
+      //       method: 'post',
+      //       url: 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
+      //     })
       .then(res => res.json)
       .then(res => {
         if (res.message === 'ok') {

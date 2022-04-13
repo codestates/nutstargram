@@ -44,11 +44,16 @@ function App() {
 
   const handleLogout = () => {
     console.log('로그아웃?');
-    axios.post('http://localhost:4000/signout').then(res => {
-      setUserinfo(null);
-      setIsLogin(false);
-      Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
-    });
+    axios
+      .post(
+        // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/signout',
+        'http://localhost:4000/signout',
+      )
+      .then(res => {
+        setUserinfo(null);
+        setIsLogin(false);
+        Navigate('/login'); // '/login' 페이지로 이동시켜야한다.
+      });
   };
   const handleContents = () => {
     // axios({
@@ -93,6 +98,11 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/edituserinfo" element={<Edituserinfo />} />
         <Route path="/editcontents" element={<Edit_contents />} />
+        <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
+        <Route
+          path="/edituserinfo"
+          element={<Edituserinfo userinfo={userinfo} />}
+        />
       </Routes>
     </div>
   );
