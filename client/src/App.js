@@ -80,8 +80,11 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/edituserinfo" element={<Edituserinfo />} />
+        <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
+        <Route
+          path="/edituserinfo"
+          element={<Edituserinfo userinfo={userinfo} />}
+        />
       </Routes>
     </div>
   );

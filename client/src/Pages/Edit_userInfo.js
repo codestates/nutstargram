@@ -1,20 +1,122 @@
 /* eslint-disable */
-import React, { useEffect } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Route, Routes, NavLink as Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-const saveUserinfo = () => {};
+const EditPage = props => {
+  const { username, user_img, email, mobile } = props.userinfo;
+  const [Image, setImage] = useState(
+    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+  );
 
-const EditPage = () => {
   return (
-    <div>
-      <Link to="/mypage">
-        <button type="button"> {`<-- 뒤로가기`} </button>
-      </Link>
-      수정할 내용
-      <button type="button">저장하기</button>
-      {/* 저장 완료 되었습니다. */}
-    </div>
+    <Editpage>
+      <EditBody>
+        <EditUserName>{`${username}여기 인풋넣기`}</EditUserName>
+        {/* username 변경 공간 */}
+        <img src={Image} style={{ margin: '20px' }} width="100" height="100" />
+        <EditImgBtn>여기 프로필 이미지 수정 버튼</EditImgBtn>
+        {/* 로컬에서 이미지 선택해서 반영시킬 공간 */}
+        <FixIndex>이메일 *</FixIndex>
+        <EditEmail>{`${email}여기 인풋넣기`}</EditEmail>
+        {/* 이메일 변경 공간 */}
+        <FixIndex>연락처 *</FixIndex>
+        <EditMobile>{`${mobile}여기 인풋넣기`}</EditMobile>
+        {/* 모바일 변경 공간 */}
+        <EditBtn>
+          <NavLink to="/mypage" activeStyle="true">
+            수정하기
+          </NavLink>
+        </EditBtn>
+      </EditBody>
+    </Editpage>
   );
 };
 
 export default EditPage;
+
+const Editpage = styled.div`
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+`;
+
+const EditBody = styled.div`
+  position: relative;
+  margin: 5% auto;
+  height: 450px;
+  width: 400px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+`;
+
+const EditUserName = styled.div`
+  font-size: larger;
+  font-weight: bold;
+  color: grey;
+  padding: 20px;
+`;
+
+const EditImgBtn = styled.div``;
+
+const EditEmail = styled.div`
+  width: 220px;
+  height: 32px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #aaa;
+  font-size: 15px;
+  margin: auto;
+`;
+
+const EditMobile = styled.div`
+  width: 220px;
+  height: 32px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #aaa;
+  font-size: 15px;
+  margin: auto;
+`;
+
+const EditBtn = styled.div`
+  flex-direction: row-reverse;
+  align-items: center;
+  position: relative;
+  margin: 24px;
+
+  @media screen and (max-width: 768px) {
+    dispaly: none;
+  }
+`;
+
+const NavLink = styled(Link)`
+  border-radius: 4px;
+  background: #f9aa83;
+  padding: 10px 22px;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #f9aa83;
+  }
+`;
+
+const FixIndex = styled.div`
+  font-size: medium;
+  font-weight: bold;
+  color: grey;
+  padding-top: 20px;
+`;
