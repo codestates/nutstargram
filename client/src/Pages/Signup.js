@@ -17,6 +17,8 @@ const SignUpPage = () => {
     password: '',
     confirmpassword: '',
   });
+
+  console.log(inputValue)
   // 값 상태 저장
   const [emailMessage, setEmailMessage] = useState(
     `Email은 '@'와 '.'이 필요합니다`,
@@ -62,6 +64,7 @@ const SignUpPage = () => {
       ...inputValue,
       [name]: value,
     });
+    console.log(inputValue)
 
     // 값이 저장되는 로직
 
@@ -113,11 +116,7 @@ const SignUpPage = () => {
       },
     })
       .then(res => {
-        console.log(res.data);
-      })
-
-      .then(res => {
-        navigate('/login');
+        navigate('/');
         console.log(res.data);
       })
       .catch(err => {
@@ -128,8 +127,8 @@ const SignUpPage = () => {
   }
   
 
-
 return (
+  
     <Fragment>
       <div className="top">
       {openModal && 
@@ -142,43 +141,24 @@ return (
       />}
       {/* openModal === true 일 때 띄우기 */}
       {/* handleAxios 요청 보내기 */}
-        <h1>회원가입 페이지 입니다</h1>
+        <div className='h1'>회원가입 페이지 입니다</div>
         {/* input type text or textarea */}
         <form name="all" className="signUpInput">
           <div className="inputMessage">User Name *</div>
-          <input type="text" name="username" onChange={handleInput}></input>
+          <input type="text" name="username" onBlur={handleInput} onChange={handleInput}></input>
           <div className="inputMessage">Email *</div>
-          <input type="text" name="email" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            className={isValidEmail ? 'successMessage' : 'failMessage'}
-          >
-            {emailMessage}
-          </div>
+          <input type="text" name="email" onBlur={handleInput} onChange={handleInput}></input>
           <div className="inputMessage">Mobile *</div>
-          <input type="text" name="mobile" onChange={handleInput}></input>
+          <input type="text" name="mobile" onBlur={handleInput} onChange={handleInput}></input>
           <div className="inputMessage">Password *</div>
-          <input type="text" name="password" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            className={isValidPassword ? 'successMessage' : 'failMessage'}
-          >
-            {passwordMessage}
-          </div>
+          <input type="password" name="password" className="password" onBlur={handleInput} onChange={handleInput}></input>
           <div className="inputMessage">Confirm Password *</div>
           <input
-            type="text"
+            type="password"
             name="confirmpassword"
-            onChange={handleInput}
+            className="confirmpassword"
+            onBlur={handleInput} onChange={handleInput}
           ></input>
-          <div
-            onChange={handleInput}
-            className={
-              isValidConfirmPassword ? 'successMessage' : 'failMessage'
-            }
-          >
-            {confirmPasswordMessage}
-          </div>
         </form>
         <button
           className={
@@ -194,4 +174,5 @@ return (
     </Fragment>
   );
 };
+
 export default SignUpPage;

@@ -24,7 +24,6 @@ function App() {
 
   console.log(userinfo);
   const handleLogout = () => {
-
     // console.log('로그아웃?');
     axios.post('http://localhost:4000/signout').then(res => {
       setUserinfo(null);
@@ -61,7 +60,6 @@ function App() {
         setUserinfo(aa);
         handleContents(userinfo.data.data.jwt.id);
       });
-
   };
   // console.log(userinfo);
   const handleLoginSuccess = userInfo => {
@@ -76,27 +74,25 @@ function App() {
   }, []);
 
   // element={<Signup username={userinfo.username}
+
+  console.log(islogin);
   return (
     <div className="App">
-      {islogin ? (
-        <div>
-          <NavBar />
-          <Main userinfo={userinfo} />
-        </div>
-      ) : (
-        <div>
-          <Login handleLoginSuccess={handleLoginSuccess} />
-        </div>
-      )}
+      {/* {islogin ? <NavBar /> : null} */}
+      <NavBar />
       <Routes>
-        <Route path="/" />
-        <Route path="/main" element={<Main content={content} />} />
+        <Route
+          path="/"
+          element={<Login handleLoginSuccess={handleLoginSuccess} />}
+        />
+        <Route
+          path="/main"
+          element={<Main content={content} userinfo={userinfo} />}
+        />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/writePage" element={<Write userinfo={userinfo} />} />
         <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
         <Route path="/edituserinfo" element={<Edituserinfo />} />
-
       </Routes>
     </div>
   );

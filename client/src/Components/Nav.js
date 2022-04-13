@@ -8,14 +8,14 @@ const NavBar = props => {
   const returnProps = props;
   return (
     <Nav>
-      <NavLogo to="/" activestyle="true">
+      <NavLogo to="/main" activestyle="true">
         <img src={LogoImg} alt="LogoImg" width="50" height="50" />
       </NavLogo>
       <NavMenu>
-        <NavLink to="/WritePage" activestyle="true">
+        <NavLink to="/writepage" activestyle="true">
           일기를 써보자!
         </NavLink>
-        <NavLink to="/Edit_contents" activestyle="true">
+        <NavLink to="/editcontents" activestyle="true">
           편집하자!
         </NavLink>
         <NavLink to="/mypage" activestyle="true">
@@ -23,7 +23,7 @@ const NavBar = props => {
         </NavLink>
       </NavMenu>
       <NavBtn>
-        <NavBtnLink to="/login" onClick={returnProps.handleLogout}>log out</NavBtnLink>
+        <NavBtnLink to="/" onClick={returnProps.handleLogout}>log out</NavBtnLink>
       </NavBtn>
     </Nav>
   );

@@ -34,7 +34,7 @@ const Modal = props => {
         
           <div>
           <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
-          <SubmitBtn onClick={() => props.handleAxios()}>회원가입버튼</SubmitBtn> 
+          <SubmitBtn onClick={() => props.handleAxios()}>가입하시겠습니까?</SubmitBtn> 
           </div>
         
         )}
@@ -63,8 +63,8 @@ const AlertMessage = styled.div`
 
 
 const ModalBody = styled.div`
-  width: 500px;
-  height: 500px;
+  width: 300px;
+  height: 200px;
   border-radius: 12px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

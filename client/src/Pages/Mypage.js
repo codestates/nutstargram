@@ -9,7 +9,6 @@ axios.defaults.withCredentials = true;
 // const navigate=useNavigate();
 
 const MyPage = props => {
-
   const { username, user_img, email, mobile } = props.userinfo;
   const navigate=useNavigate();
   console.log(user_img);
