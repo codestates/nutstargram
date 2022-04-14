@@ -1,10 +1,15 @@
+/* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
+import Modal from '../Components/Modals/Modalsignup';
 
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState({
     username: '',
     email: '',
@@ -51,9 +56,9 @@ const SignUpPage = () => {
     isValidConfirmPassword === true;
   // 검사한 모든 로직이 true 일때, 버튼을 활성화 시킬 것
 
-  const handleInput = event => {
+  const handleInput = async event => {
     const { name, value } = event.target;
-    setInputValue({
+    await setInputValue({
       ...inputValue,
       [name]: value,
     });
@@ -81,97 +86,108 @@ const SignUpPage = () => {
     }
   };
 
+  // setModal
+  const [openModal, setOpenModal] = useState(false);
+
+  // 모달 열고닫는 버튼
   const handleButtonValid = () => {
-    if (!isValidInput) {
-      alert('빈칸을 채워주세요');
-    } else if (!isValidEmail) {
-      alert('email에는 @와 . 이 포함되어야 합니다');
-    } else if (!isValidPassword) {
-      alert('비밀번호는 숫자8자리 이상이어야 합니다');
-    } else if (!isValidConfirmPassword) {
-      alert('비밀번호가 서로 같은지 확인해주세요');
-    } else {
-      // post 요청
-      const data = {
-        username: username,
-        password: password,
-        mobile: mobile,
-        email: email,
-      };
-
-      axios({
-        method: 'post',
-        url: 'http://localhost:4000/signup',
-        data: data,
-        headers: {
-          'Content-Type': `application/json`,
-        },
-      })
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          if (err.message === 'Request failed with status code 409') {
-            alert('이미 존재하는 이메일 입니다');
-          }
-        });
-    }
+    setOpenModal(true);
   };
+  // post 요청 함수 === submit버튼
+  const handleAxios = () => {
+    const data = {
+      username: username,
+      password: password,
+      mobile: mobile,
+      email: email,
+    };
 
-  // email 인증메일 구현(advanced)
-  const handleValidEmail = () => {};
+    axios({
+      method: 'post',
+      url: 'http://localhost:4000/signup',
+      data: data,
+      headers: {
+        'Content-Type': `application/json`,
+        withCredentials: true,
+      },
+    })
+      .then(res => {
+        navigate('/main');
+        console.log(res.data);
+      })
+      .catch(err => {
+        if (err.message === 'Request failed with status code 409') {
+          alert('이미 존재하는 이메일 입니다');
+        }
+      });
+  };
 
   return (
     <Fragment>
-      <h1>회원가입 페이지 입니다</h1>
-      {/* input type text or textarea */}
-      <form name="all" className="signUpInput">
-        <div className="inputMessage">User Name *</div>
-        <input type="text" name="username" onChange={handleInput}></input>
-        <div className="inputMessage">Email *</div>
-        <input type="text" name="email" onChange={handleInput}></input>
-        <div
-          onChange={handleInput}
-          className={isValidEmail ? 'successMessage' : 'failMessage'}
+      <div className="top">
+        {openModal && (
+          <Modal
+            className="Modal"
+            closeModal={setOpenModal}
+            handleAxios={handleAxios}
+            emailMessage={emailMessage}
+            passwordMessage={passwordMessage}
+            confirmPasswordMessage={confirmPasswordMessage}
+          />
+        )}
+        {/* openModal === true 일 때 띄우기 */}
+        {/* handleAxios 요청 보내기 */}
+        <h1>회원가입 페이지 입니다</h1>
+        {/* input type text or textarea */}
+        <form name="all" className="signUpInput">
+          <div className="inputMessage">User Name *</div>
+          <input
+            type="text"
+            name="username"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Email *</div>
+          <input
+            type="text"
+            name="email"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Mobile *</div>
+          <input
+            type="text"
+            name="mobile"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Password *</div>
+          <input
+            type="password"
+            name="password"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Confirm Password *</div>
+          <input
+            type="password"
+            name="confirmpassword"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+        </form>
+        <button
+          className={
+            getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'
+          }
+          type="button"
+          name="submit"
+          onClick={handleButtonValid}
         >
-          {emailMessage}
-        </div>
-        <button type="button" onClick={handleValidEmail}>
-          인증메일 보내기(미구현)
+          회원가입
         </button>
-        <div className="inputMessage">Mobile *</div>
-        <input type="text" name="mobile" onChange={handleInput}></input>
-        <div className="inputMessage">Password *</div>
-        <input type="text" name="password" onChange={handleInput}></input>
-        <div
-          onChange={handleInput}
-          className={isValidPassword ? 'successMessage' : 'failMessage'}
-        >
-          {passwordMessage}
-        </div>
-        <div className="inputMessage">Confirm Password *</div>
-        <input
-          type="text"
-          name="confirmpassword"
-          onChange={handleInput}
-        ></input>
-        <div
-          onChange={handleInput}
-          className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
-        >
-          {confirmPasswordMessage}
-        </div>
-      </form>
-      <button
-        className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
-        type="button"
-        name="submit"
-        onClick={handleButtonValid}
-      >
-        회원가입
-      </button>
+      </div>
     </Fragment>
   );
 };
-
 export default SignUpPage;
