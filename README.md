@@ -1,5 +1,5 @@
 # nutstargram
-
+<img src="https://user-images.githubusercontent.com/91799861/163333831-e8f19971-b7c9-41fc-b426-b793950b66e2.png" width="200px">
 
 ## 사용된 기술
 **Front-end:**
@@ -9,6 +9,8 @@
 <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
 <img src="https://img.shields.io/badge/Styled Components-DB7093?style=for-the-badge&logo=Styled Components&logoColor=white">
 <img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=Github&logoColor=white">
+<img src="https://img.shields.io/badge/React Router-CA4245?style=for-the-badge&logo=React Router&logoColor=white">
+
 
 
 **Back-end:** <br>
