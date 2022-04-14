@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    // origin: 'http://nutstagram.s3-website.ap-northeast-2.amazonaws.com',
-    origin: 'http://localhost:3000',
+    // origin: ,
+    origin: ['http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   }),
@@ -42,7 +42,7 @@ app.get('/userinfo', controllers.userinfo);
 app.post('/main', controllers.main);
 app.get('/auth', controllers.auth);
 
-const HTTPS_PORT = process.env.HTTPS_PORT || 4000;
+const HTTPS_PORT = process.env.HTTPS_PORT || 80;
 
 // let server;
 // if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
