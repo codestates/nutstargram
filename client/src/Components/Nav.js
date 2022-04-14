@@ -17,11 +17,14 @@ const NavBar = ({ handleLogout }) => {
         <NavLink to="/WritePage" activestyle="true">
           일기를 써보자!
         </NavLink>
-        <NavLink to="/edituser" activestyle="true">
+        {/* <NavLink to="/edituser" activestyle="true">
           편집하자!
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/mypage" activestyle="true">
           마이페이지!!
+        </NavLink>
+        <NavLink to="/signup" activestyle="true">
+          회원가입
         </NavLink>
       </NavMenu>
       <NavBtn>

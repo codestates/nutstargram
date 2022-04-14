@@ -16,13 +16,6 @@ const MyPage = props => {
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
   console.log(Image);
-
-  // function handleEditUserInfo({
-  //   navigate('/edituser');
-  // })
-  const handleEditUserInfo = () => {
-    navigate('/edituserinfo');
-  };
   return (
     <Mypage>
       <MyBody>
@@ -32,11 +25,6 @@ const MyPage = props => {
         <MyEmail>{email}</MyEmail>
         <FixIndex>연락처 *</FixIndex>
         <MyMobile>{mobile}</MyMobile>
-        <EditBtn>
-          <NavLink to="/edituserinfo" activestyle="true">
-            내정보 편집하기
-          </NavLink>
-        </EditBtn>
       </MyBody>
     </Mypage>
   );

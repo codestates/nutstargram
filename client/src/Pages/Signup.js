@@ -35,7 +35,7 @@ const SignUpPage = () => {
   // email 검사 : @ 와 . 포함 될 것
   const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
   // 비밀번호 특수문자 확인을 위한 정규식 표현
-  const isValidPassword = password.length >= 8 && specialLetter >= 1;
+  const isValidPassword = password.length >= 4 && specialLetter >= 1;
   // 특수문자 1자 이상, 전체 8자 이상
   const isValidConfirmPassword =
     confirmpassword === password &&
@@ -56,9 +56,9 @@ const SignUpPage = () => {
     isValidConfirmPassword === true;
   // 검사한 모든 로직이 true 일때, 버튼을 활성화 시킬 것
 
-  const handleInput = async event => {
+  const handleInput = event => {
     const { name, value } = event.target;
-    await setInputValue({
+    setInputValue({
       ...inputValue,
       [name]: value,
     });
@@ -75,7 +75,7 @@ const SignUpPage = () => {
       setPasswordMessage('올바른 비밀번호 입니다');
     } else {
       setPasswordMessage(
-        '비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다',
+        '비밀번호는 특수문자를 포함한 4글자 이상으로 작성해 주셔야 합니다',
       );
     }
 
@@ -112,12 +112,11 @@ const SignUpPage = () => {
       },
     })
       .then(res => {
+        // console.log(res);
         navigate('/main');
-        console.log(res.data);
       })
       .catch(err => {
         if (err.message === 'Request failed with status code 409') {
-          alert('이미 존재하는 이메일 입니다');
         }
       });
   };
