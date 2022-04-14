@@ -8,11 +8,11 @@ const EditPage = props => {
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
-  const inputUsername = username
-  console.log(inputUsername)
-  const [editUserName, setEditUserName] = useState(username)
-  const [editEmail, setEditEmail] = useState(email)
-  const [editMobile, setEditMobile] = useState(mobile)
+  const inputUsername = username;
+  console.log(inputUsername);
+  const [editUserName, setEditUserName] = useState(username);
+  const [editEmail, setEditEmail] = useState(email);
+  const [editMobile, setEditMobile] = useState(mobile);
   const [inputValue, setInputValue] = useState({
     username: inputUsername,
     email: email,
@@ -21,13 +21,13 @@ const EditPage = props => {
 
   const handleInput = event => {
     const { name, value } = event.target;
-    console.log(value + '   value 입니다.')
-    console.log(name + '   name 입니다.')
+    console.log(value + '   value 입니다.');
+    console.log(name + '   name 입니다.');
     setInputValue({
       ...inputValue,
       [name]: value,
     });
-  }
+  };
 
   const handlePatch = () => {
     axios({
@@ -40,10 +40,6 @@ const EditPage = props => {
       },
     })
       .then(res => {
-        console.log(res.data);
-      })
-
-      .then(res => {
         navigate('/mypage');
         console.log(res.data);
       })
@@ -52,38 +48,26 @@ const EditPage = props => {
           alert('이미 존재하는 이메일 입니다');
         }
       });
-  }
-
-  
-
-
+  };
 
   return (
     <Editpage>
       <EditBody>
         <button>{handlePatch}</button>
-        <EditUserName 
-        name='username'
-        type="text"
-        onChange={handleInput}
+        <EditUserName
+          name="username"
+          type="text"
+          onChange={handleInput}
         ></EditUserName>
         {/* username 변경 공간 */}
         <img src={Image} style={{ margin: '20px' }} width="100" height="100" />
         <EditImgBtn>여기 프로필 이미지 수정 버튼</EditImgBtn>
         {/* 로컬에서 이미지 선택해서 반영시킬 공간 */}
         <FixIndex>이메일 *</FixIndex>
-        <EditEmail 
-        name='email'
-        type="text"
-        onChange={handleInput}
-        />
+        <EditEmail name="email" type="text" onChange={handleInput} />
         {/* 이메일 변경 공간 */}
         <FixIndex>연락처 *</FixIndex>
-        <EditMobile
-        name='mobile' 
-        type="text"
-        onChange={handleInput}
-        />
+        <EditMobile name="mobile" type="text" onChange={handleInput} />
         {/* 모바일 변경 공간 */}
         <EditBtn>
           <NavLink to="/mypage" activeStyle="true">

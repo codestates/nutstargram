@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
-import Modal from '../Components/Modals/Modalsignup'
+import Modal from '../Components/Modals/Modalsignup';
 
 axios.defaults.withCredentials = true;
 
@@ -17,8 +17,6 @@ const SignUpPage = () => {
     password: '',
     confirmpassword: '',
   });
-
-  console.log(inputValue)
   // 값 상태 저장
   const [emailMessage, setEmailMessage] = useState(
     `Email은 '@'와 '.'이 필요합니다`,
@@ -37,7 +35,7 @@ const SignUpPage = () => {
   // email 검사 : @ 와 . 포함 될 것
   const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
   // 비밀번호 특수문자 확인을 위한 정규식 표현
-  const isValidPassword = password.length >= 8 && specialLetter >= 1;
+  const isValidPassword = password.length >= 4 && specialLetter >= 1;
   // 특수문자 1자 이상, 전체 8자 이상
   const isValidConfirmPassword =
     confirmpassword === password &&
@@ -64,7 +62,6 @@ const SignUpPage = () => {
       ...inputValue,
       [name]: value,
     });
-    console.log(inputValue)
 
     // 값이 저장되는 로직
 
@@ -78,7 +75,7 @@ const SignUpPage = () => {
       setPasswordMessage('올바른 비밀번호 입니다');
     } else {
       setPasswordMessage(
-        '비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다',
+        '비밀번호는 특수문자를 포함한 4글자 이상으로 작성해 주셔야 합니다',
       );
     }
 
@@ -94,11 +91,10 @@ const SignUpPage = () => {
 
   // 모달 열고닫는 버튼
   const handleButtonValid = () => {
-    setOpenModal(true)
-  }
+    setOpenModal(true);
+  };
   // post 요청 함수 === submit버튼
   const handleAxios = () => {
-    
     const data = {
       username: username,
       password: password,
@@ -116,48 +112,67 @@ const SignUpPage = () => {
       },
     })
       .then(res => {
-        navigate('/');
-        console.log(res.data);
+        // console.log(res);
+        navigate('/main');
       })
       .catch(err => {
         if (err.message === 'Request failed with status code 409') {
-          alert('이미 존재하는 이메일 입니다');
         }
       });
-  }
-  
+  };
 
-return (
-  
+  return (
     <Fragment>
       <div className="top">
-      {openModal && 
-      <Modal className="Modal" 
-      closeModal={setOpenModal} 
-      handleAxios={handleAxios} 
-      emailMessage={emailMessage} 
-      passwordMessage={passwordMessage}
-      confirmPasswordMessage={confirmPasswordMessage}
-      />}
-      {/* openModal === true 일 때 띄우기 */}
-      {/* handleAxios 요청 보내기 */}
-        <div className='h1'>회원가입 페이지 입니다</div>
+        {openModal && (
+          <Modal
+            className="Modal"
+            closeModal={setOpenModal}
+            handleAxios={handleAxios}
+            emailMessage={emailMessage}
+            passwordMessage={passwordMessage}
+            confirmPasswordMessage={confirmPasswordMessage}
+          />
+        )}
+        {/* openModal === true 일 때 띄우기 */}
+        {/* handleAxios 요청 보내기 */}
+        <h1>회원가입 페이지 입니다</h1>
         {/* input type text or textarea */}
         <form name="all" className="signUpInput">
           <div className="inputMessage">User Name *</div>
-          <input type="text" name="username" onBlur={handleInput} onChange={handleInput}></input>
+          <input
+            type="text"
+            name="username"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
           <div className="inputMessage">Email *</div>
-          <input type="text" name="email" onBlur={handleInput} onChange={handleInput}></input>
+          <input
+            type="text"
+            name="email"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
           <div className="inputMessage">Mobile *</div>
-          <input type="text" name="mobile" onBlur={handleInput} onChange={handleInput}></input>
+          <input
+            type="text"
+            name="mobile"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
           <div className="inputMessage">Password *</div>
-          <input type="password" name="password" className="password" onBlur={handleInput} onChange={handleInput}></input>
+          <input
+            type="password"
+            name="password"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
           <div className="inputMessage">Confirm Password *</div>
           <input
             type="password"
             name="confirmpassword"
-            className="confirmpassword"
-            onBlur={handleInput} onChange={handleInput}
+            onBlur={handleInput}
+            onChange={handleInput}
           ></input>
         </form>
         <button
@@ -174,5 +189,4 @@ return (
     </Fragment>
   );
 };
-
 export default SignUpPage;

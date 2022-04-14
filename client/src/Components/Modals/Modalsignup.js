@@ -4,41 +4,45 @@ import { Route, Routes, NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Modal = props => {
-  console.log(props.emailMessage)
+  console.log(props.emailMessage);
   return (
     <ModalBackGround>
       <ModalBody>
         <div>
-        { props.emailMessage === `Email은 '@'와 '.'이 필요합니다` ? ( 
-
-        <div>
-        <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
-        <AlertMessage>Email은 '@'와 '.'이 필요합니다</AlertMessage> 
+          {props.emailMessage === `Email은 '@'와 '.'이 필요합니다` ? (
+            <div>
+              <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
+              <AlertMessage>Email은 '@'와 '.'이 필요합니다</AlertMessage>
+            </div>
+          ) : props.passwordMessage ===
+            `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다` ? (
+            <div>
+              <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
+              <AlertMessage>
+                비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다
+              </AlertMessage>
+            </div>
+          ) : props.confirmPasswordMessage ===
+            '비밀번호가 일치하지 않습니다' ? (
+            <div>
+              <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
+              <AlertMessage>비밀번호가 일치하지 않습니다</AlertMessage>
+            </div>
+          ) : (
+            <div>
+              <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
+              <SubmitBtn onClick={() => props.handleAxios()}>
+                회원가입성공
+              </SubmitBtn>
+            </div>
+          )}
         </div>
-
-        ) : props.passwordMessage === `비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다` ? (
-
-        <div>
-        <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
-        <AlertMessage>비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다</AlertMessage> 
-        </div>
-
-        ) : props.confirmPasswordMessage === '비밀번호가 일치하지 않습니다' ? (
-
-        <div>
-        <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
-        <AlertMessage>비밀번호가 일치하지 않습니다</AlertMessage> 
-        </div>
-
-        ) : ( 
-        
-          <div>
-          <CloseBtn onClick={() => props.closeModal(false)}>X</CloseBtn>
-          <SubmitBtn onClick={() => props.handleAxios()}>가입하시겠습니까?</SubmitBtn> 
-          </div>
-        
-        )}
-        </div>
+        <h3>
+          회원가입이 정상적으로 완료 되었습니다.
+          <br />
+          <br />
+          로그인 페이지로 돌아가 로그인해주세요
+        </h3>
       </ModalBody>
     </ModalBackGround>
   );
@@ -59,12 +63,11 @@ const ModalBackGround = styled.div`
 
 const AlertMessage = styled.div`
   font-size: large;
-`
-
+`;
 
 const ModalBody = styled.div`
-  width: 300px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
   border-radius: 12px;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
