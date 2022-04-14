@@ -46,26 +46,28 @@ function App() {
         },
       )
       .then(post => {
+        console.log(post);
         setContent(post.data);
+        // console.log(post);
       });
   };
   // console.log(content);
-  const isAuthorized = () => {
-    axios
+  const isAuthorized = async () => {
+    await axios
       .get('http://localhost:4000/auth', {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       })
-      .then(aa => {
-        setUserinfo(aa);
+      .then(async aa => {
+        await setUserinfo(aa);
         handleContents(userinfo.data.data.jwt.id);
       });
   };
   // console.log(userinfo);
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = async () => {
     // console.log('app.js', userInfo.data.data.id); 디비속 유저의 아이디값이 나옵니다
     setLogin(true);
-    isAuthorized();
+    await isAuthorized();
   };
 
   useEffect(() => {
@@ -93,6 +95,9 @@ function App() {
           <Route path="/edituserinfo" element={<Edituserinfo />} />
         </Routes>
       )}
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
 // eslint-disable-next-line react/prop-types
 const WritePage = ({ userinfo }) => {
+  const Navigate = useNavigate();
   // Styled component
   const Container = styled.div`
     img {
@@ -13,16 +14,8 @@ const WritePage = ({ userinfo }) => {
       //object-fit: cover; 이거 쓰면 이미지 짤림
     }
   `;
-  console.log(userinfo);
-  const [contents, setContents] = useState({
-    user_id: '',
-    content_img: [],
-    content_text: '',
-    content_emoji: null,
-    content_weather: null,
-  });
-  // 만들어준 state에 파일객체를 담아서 서버에 업로드 요청을 보낸다.
-  const [postfiles, setPostfiles] = useState([]); // 이미지 파일 자체를 받을 state
+  // eslint-disable-next-line react/prop-types
+  console.log(userinfo.data.data.jwt.id);
 
   const [previewImg, setPreviewImg] = useState(null); // 미리보기 이미지 구현을 위한 데이터를 받을 state
 
@@ -56,46 +49,6 @@ const WritePage = ({ userinfo }) => {
       // console.log(formData.entries());
     };
   };
-  // 서버에 파일을 업로드하기위해선 무조건 fromData, append method를 사용해야한다.
-  // key, value를 보낼 수 있는데, Key = 'file'을, value에는 실제 이미지파일을 넣고 axios를 이용해서 api를 호출하면 서버에 이미지가 등록된다.
-  // const sendImgToServer = async () => {
-  //   if (postfiles.file) {
-  //     const formData = new FormData();
-  //     formData.append('file', previewImg); // formData 객체를 업데이트해준다.
-  //     // console.log(formData); //formData는 키/값 쌍을 컴파일한 특수한 객체이기 때문에 문자열로 표현할 수 없다.
-  //     // for (const keyValue of formData) console.log(keyValue);
-  //     await axios
-  //       .post({
-  //         url: 'http://localhost:4000/write',
-  //         method: 'post',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: formData, // JSON.stringify(previewImg),
-  //       })
-  //       .then(res => res.json())
-  //       .then(res => {
-  //         if (res.message === 'ok')
-  //           // return history.push('/main'); // 서버에 성공적으로 이미지 업로드하면 Main 페이지로 이동
-  //           console.log('ok!');
-  //       });
-  //     setPostfiles({
-  //       file: 'file',
-  //       previewURL: previewImg,
-  //     });
-  //     console.log(postfiles.file, postfiles.previewURL);
-  //   } else {
-  //     alert('사진을 선택해주세요!');
-  //   }
-  // };
-  // const formData = new FormData();
-  // const onFileChange = e => { //미리보기가 지원되지않는 기능
-  //   console.log(e.target.files[0]);
-  //   if (e.target && e.target.files[0]) {
-  //     formData.append('file', e.target.files[0]);
-  //   }
-  // };
-  // /axios.post ('url', { formData})
 
   const submitContent = () => {
     if (previewImg) {
@@ -125,29 +78,7 @@ const WritePage = ({ userinfo }) => {
       alert('컨텐츠가 부족합니다!');
     }
   };
-  /* 위 함수에 body안에 write도 포함시켰기 때문에 더 이상 식을 분기하지 않아도 된다.  */
-  // const sendTextContent = async () => {
-  //   console.log('문자 전송 버튼 클릭됨');
-  //   if (write.length !== 0) {
-  //     console.log('조건문 확인');
-  //     await axios({
-  //       url: 'http://localhost:4000/write',
-  //       method: 'post',
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //       },
-  //       body: write,
-  //     })
-  //       .then(res => res.json())
-  //       .then(res => {
-  //         if (res.message === 'ok') {
-  //           console.log('작성한 글이 성공적으로 서버에 보내졌습니다.');
-  //         }
-  //       });
-  //   } else {
-  //     alert('글을 입력해주세요');
-  //   }
-  // };
+
   const sendContent = async () => {
     console.log('sending texts to server');
     if (write.length !== 0) {
@@ -156,7 +87,12 @@ const WritePage = ({ userinfo }) => {
         .post(
           // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
           'http://localhost:4000/write',
-          { content_text: write, user_id: 1, content_img: previewImg }, // formData는 객체라서 여기다 집어넣을수가 없음..
+          {
+            content_text: write,
+            // eslint-disable-next-line react/prop-types
+            user_id: userinfo.data.data.jwt.id,
+            content_img: previewImg,
+          }, // formData는 객체라서 여기다 집어넣을수가 없음..
           {
             headers: {
               'Content-type': 'application/json',
@@ -164,9 +100,8 @@ const WritePage = ({ userinfo }) => {
             },
           },
         )
-        .then(res => res.json())
         .then(res => {
-          if (res.message === 'ok') {
+          if (res.statusText === 'OK') {
             console.log('텍스트 내용 전송이 성공적으로 전달되었습니다.');
             Navigate('/main');
           }
@@ -176,19 +111,6 @@ const WritePage = ({ userinfo }) => {
     }
   };
 
-  axios
-    .post
-    // 서버에 업로드하는 파일들을 보내줘야한다.
-    // 'http://localhost:4000/write',
-    // {
-    //   email: loginInfo.email,
-    //   password: loginInfo.password,
-    // },
-    // {
-    //   headers: { 'Content-Type': 'application/json' },
-    //   withCredentials: true,
-    // },
-    ();
   return (
     <div>
       <h2>일기 작성 페이지</h2>
