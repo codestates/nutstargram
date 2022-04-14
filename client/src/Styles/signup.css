@@ -1,33 +1,37 @@
 .signUpButtonAction{
-  position: relative;
-  width: 120px;
-  height: 32px;
-  background: #aaa;
+  border-radius: 4px;
+  background: #f9aa83;
+  padding: 10px 22px;
+  color: #fff;
   border: none;
-  border-radius: 2px;
-  font-family: sans-serif;
-  color: green
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .signUpButtonAction:hover {
-  background-color: rgb(159, 229, 159);
   transition: all 0.2s ease-in-out;
+    background: #fff;
+    color: #f9aa83;
 }
 
 .signUpButtonInaction{
-  position: relative;
-  width: 120px;
-  height: 32px;
-  background: #aaa;
+  border-radius: 4px;
+  background: grey;
+  padding: 10px 22px;
+  color: #fff;
   border: none;
-  border-radius: 2px;
-  font-family: sans-serif;
-  color: red
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .signUpButtonInaction:hover{
-  background-color: #E29091;
   transition: all 0.2s ease-in-out;
+    background: grey;
+    color: red;
 }
 
 .successMessage {
@@ -51,14 +55,49 @@ input[type='text']{
   font-weight: 400;
   font-size: 15px;
   transition: 0.2s ease;
+}
 
+.confirmpassword{
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 220px;
+  height: 32px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #aaa;
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.password{
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 220px;
+  height: 32px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #aaa;
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
 }
 
 form[name='all']{
   position: relative;
   margin: 5% auto;
-  height: 600px;
+  height: 350px;
   width: 600px;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.h1 {
+  font-size: 32px;
+  color: #333333;
+  text-align: center;
 }
