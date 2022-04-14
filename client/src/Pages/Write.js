@@ -1,10 +1,21 @@
 import React, { useEffect, useState, Component } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import ModalWrite from '../Components/Modals/ModalWrite';
 
-const WritePage = () => {
+// eslint-disable-next-line react/prop-types
+const WritePage = props => {
+  // Styled component
+  const Container = styled.div`
+    img {
+      width: 200px;
+      height: 200px;
+      //object-fit: cover; 이거 쓰면 이미지 짤림
+    }
+  `;
+  const reProps = props;
+  console.log(reProps);
   const [contents, setContents] = useState({
     user_id: '',
     content_img: [],
@@ -19,16 +30,13 @@ const WritePage = () => {
 
   const [write, setWrite] = useState('');
 
-  const [showModal, setShowModal] = useState('false');
-
+  const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
     setShowModal(false);
   };
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setShowModal(false);
-  //   });
-  // });
+
+  const navigate = useNavigate();
+
   const handleTextChange = e => {
     setWrite(e.target.value);
     // console.log(e.target.value);
@@ -158,11 +166,15 @@ const WritePage = () => {
         .post(
           // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
           'http://localhost:4000/write',
-          { content_text: write, user_id: 1, content_img: previewImg }, // formData는 객체라서 여기다 집어넣을수가 없음..
+          {
+            content_text: write,
+            user_id: reProps.id,
+            content_img: previewImg,
+          }, // formData는 객체라서 여기다 집어넣을수가 없음..
           {
             headers: {
               'Content-type': 'application/json',
-              withCredentials: true,
+              // withCredentials: true,
             },
           },
         )
@@ -171,7 +183,7 @@ const WritePage = () => {
           if (res.message === 'ok') {
             console.log('텍스트 내용 전송이 성공적으로 전달되었습니다.');
             setShowModal(false);
-            Navigate('/main');
+            navigate('/main');
           }
         });
       // axios.post( 'http://localhost:4000/write'), {email: userinfo.email};
@@ -227,14 +239,11 @@ const WritePage = () => {
         </Container>
       </div>
       <div className="t-a">
-        <Textarea>
-          <textarea
-            // className="write"
-            type="text"
-            onChange={handleTextChange}
-            placeholder="오늘의 기분"
-          ></textarea>
-        </Textarea>
+        <Textarea
+          type="text"
+          onChange={handleTextChange}
+          placeholder="오늘의 기분"
+        ></Textarea>
       </div>
       <br />
       <button className="btn-post" onClick={sendContent}>

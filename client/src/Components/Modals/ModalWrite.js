@@ -14,7 +14,9 @@ export const ModalContainer = styled.div`
     position: fixed
 `;
 
-export const ModalViewWrite = styled.div`    
+export const ModalViewWrite = styled.div.attrs(props => ({
+    role: 'dialog'
+}))`    
     background-color: white;
     width: 200px;
     height:150px;
@@ -24,6 +26,7 @@ export const ModalViewWrite = styled.div`
     align-items: center;
     position: absolute;
     border-radius: 20px;
+    margin: 10% auto;
 `;
 
 

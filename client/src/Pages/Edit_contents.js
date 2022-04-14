@@ -17,6 +17,11 @@ const Edit_contents = content => {
   const openModal = () => {
     setShowModal(false);
   };
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowModal(false);
+  //   }, 3000);
+  // });
   const handleTextChange = e => {
     setEditWrite(e.target.value);
     // console.log(e.target.value);
@@ -41,9 +46,9 @@ const Edit_contents = content => {
 
   const submitEditContent = async () => {
     await axios({
-      method: 'patch',
+      method: 'PATCH',
       url: 'http://localhost4000/editdiary',
-      data: { content_text: editWrite, content_img: editImg, user_id: 1 },
+      body: { content_text: editWrite, content_img: editImg, user_id: 1 },
       headers: { 'Content-Type': 'application/json', withCredentials: true },
     })
       // const Edit_contents = () => {

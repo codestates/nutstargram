@@ -144,39 +144,40 @@ const SignUpPage = () => {
         {/* input type text or textarea */}
         <form name="all" className="signUpInput">
           <div className="inputMessage">User Name *</div>
-          <input type="text" name="username" onChange={handleInput}></input>
-          <div className="inputMessage">Email *</div>
-          <input type="text" name="email" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            className={isValidEmail ? 'successMessage' : 'failMessage'}
-          >
-            {emailMessage}
-          </div>
-          <div className="inputMessage">Mobile *</div>
-          <input type="text" name="mobile" onChange={handleInput}></input>
-          <div className="inputMessage">Password *</div>
-          <input type="text" name="password" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            className={isValidPassword ? 'successMessage' : 'failMessage'}
-          >
-            {passwordMessage}
-          </div>
-          <div className="inputMessage">Confirm Password *</div>
           <input
             type="text"
-            name="confirmpassword"
+            name="username"
+            onBlur={handleInput}
             onChange={handleInput}
           ></input>
-          <div
+          <div className="inputMessage">Email *</div>
+          <input
+            type="text"
+            name="email"
+            onBlur={handleInput}
             onChange={handleInput}
-            className={
-              isValidConfirmPassword ? 'successMessage' : 'failMessage'
-            }
-          >
-            {confirmPasswordMessage}
-          </div>
+          ></input>
+          <div className="inputMessage">Mobile *</div>
+          <input
+            type="text"
+            name="mobile"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Password *</div>
+          <input
+            type="password"
+            name="password"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Confirm Password *</div>
+          <input
+            type="password"
+            name="confirmpassword"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
         </form>
         <button
           className={
@@ -185,7 +186,6 @@ const SignUpPage = () => {
           type="button"
           name="submit"
           onClick={handleButtonValid}
-          // data-dismiss="Modal"
         >
           회원가입
         </button>

@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../peanuts.png';
 import ModalLogin from '../Components/Modals/ModalLogin';
 
@@ -15,6 +15,8 @@ export default function Login({ handleLoginSuccess }) {
     width: '100px',
     borderRadius: '100px',
   };
+  const navigate = useNavigate(); 
+
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
@@ -52,6 +54,7 @@ export default function Login({ handleLoginSuccess }) {
           //console.log(data) 유저 정보 들어온다
           handleLoginSuccess(data);
           setShowModal(false);
+          navigate('/main')
         });
       // 디비 조회못하고 메인으로 리디렉션중
     }
