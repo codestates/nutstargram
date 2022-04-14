@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
 import Modal from '../Components/Modals/Modalsignup';
+import styled from 'styled-components';
 
 axios.defaults.withCredentials = true;
 
@@ -91,6 +92,7 @@ const SignUpPage = () => {
 
   // 모달 열고닫는 버튼
   const handleButtonValid = () => {
+    console.log(openModal)
     setOpenModal(true);
   };
   // post 요청 함수 === submit버튼
@@ -113,7 +115,7 @@ const SignUpPage = () => {
     })
       .then(res => {
         // console.log(res);
-        navigate('/main');
+        navigate('/');
       })
       .catch(err => {
         if (err.message === 'Request failed with status code 409') {
@@ -164,6 +166,7 @@ const SignUpPage = () => {
           <input
             type="password"
             name="password"
+            className="password"
             onBlur={handleInput}
             onChange={handleInput}
           ></input>
@@ -171,6 +174,7 @@ const SignUpPage = () => {
           <input
             type="password"
             name="confirmpassword"
+            className="confirmpassword"
             onBlur={handleInput}
             onChange={handleInput}
           ></input>

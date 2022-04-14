@@ -3,19 +3,16 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
-import logo from '../peanuts.png';
+import logo from '../almonds.png';
 import Signup from './Signup';
 import Modal from '../Components/Modals/Modalsignup';
+import '../Styles/Login.css';
 
 export default function Login({ handleLoginSuccess }) {
   const navigate = useNavigate();
   // props required w/ server
   // props에 setToken || handleLoginSuccess를 전달받아 로그인 함수에 전달.
-  const style1 = {
-    height: '100px',
-    width: '100px',
-    borderRadius: '100px',
-  };
+
   const swi = false;
   const [issign, setSign] = useState(swi);
   const [loginInfo, setLoginInfo] = useState({
@@ -25,7 +22,7 @@ export default function Login({ handleLoginSuccess }) {
   const [errorMsg, setErrorMsg] = useState('');
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
-    //console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const handleLogin = () => {
@@ -46,7 +43,7 @@ export default function Login({ handleLoginSuccess }) {
           },
         )
         .then(data => {
-          //console.log(data) 유저 정보 들어온다
+          // console.log(data) 유저 정보 들어온다
           handleLoginSuccess(data);
           navigate('/main');
         });
@@ -56,36 +53,30 @@ export default function Login({ handleLoginSuccess }) {
 
   return (
     <div>
-      <div>
-        <img src={logo} style={style1} />
-        <form onSubmit={e => e.preventDefault()}>
-          <span>이메일</span>
+      <img src={logo} className="logo" />
+      <div className='h1'>NUTSTAGRAM</div>
+      
+      <div className='container'>
+        <form className='inputA' onSubmit={e => e.preventDefault()}>
           <input
             className="userEmail"
             placeholder="please write your email"
             onChange={handleInputValue('email')}
           ></input>
-          <br />
-          <br />
-          <span>비밀번호</span>
           <input
             className="pwd"
             type="password"
             placeholder="비밀번호"
             onChange={handleInputValue('password')}
           ></input>
-          <br />
-          <br />
           <button className="btn-login" type="submit" onClick={handleLogin}>
             로그인
           </button>
-          <br />
+          
         </form>
-        <div className="error-box">{errorMsg}</div>
-        {/* <button className="btn-signup" onClick={handleSign}>
-          회원가입
-        </button> */}
+        
       </div>
+      
     </div>
   );
 }
