@@ -1,20 +1,21 @@
-import React, { useState, useRef } from 'react';
-import { Routes, Route, EditBtnLink as Link } from 'react-router-dom';
+/* eslint-disable */
+import React, { useState } from 'react';
+
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
 axios.defaults.withCredentials = true;
+// const navigate=useNavigate();
 
 const MyPage = props => {
-  const returnProps = props;
-  const { username, user_img, email, mobile } = returnProps.userinfo;
-  console.log(user_img);
+  const { username, user_img, email, mobile } = props.userinfo.data.data.jwt;
+  const navigate = useNavigate();
+
   const [Image, setImage] = useState(
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
   );
-
-  const fileInput = useRef(null);
-
+  console.log(Image);
   return (
     <Mypage>
       <MyBody>
@@ -24,11 +25,6 @@ const MyPage = props => {
         <MyEmail>{email}</MyEmail>
         <FixIndex>연락처 *</FixIndex>
         <MyMobile>{mobile}</MyMobile>
-        <EditBtn>
-          <EditBtnLink to="/edituserinfo" activestyle="true">
-            내정보 편집하기 :)
-          </EditBtnLink>
-        </EditBtn>
       </MyBody>
     </Mypage>
   );
@@ -97,7 +93,7 @@ const EditBtn = styled.div`
   }
 `;
 
-const EditBtnLink = styled.div`
+const NavLink = styled(Link)`
   border-radius: 4px;
   background: #f9aa83;
   padding: 10px 22px;

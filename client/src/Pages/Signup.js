@@ -1,10 +1,15 @@
+/* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
+import Modal from '../Components/Modals/Modalsignup';
 
 axios.defaults.withCredentials = true;
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState({
     username: '',
     email: '',
@@ -26,30 +31,30 @@ const SignUpPage = () => {
 
   const { username, email, mobile, password, confirmpassword } = inputValue;
 
-  // const isValidEmail = email.includes('@') && email.includes('.');
-  // // email 검사 : @ 와 . 포함 될 것
-  // const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-  // // 비밀번호 특수문자 확인을 위한 정규식 표현
-  // const isValidPassword = password.length >= 8 && specialLetter >= 1;
-  // // 특수문자 1자 이상, 전체 8자 이상
-  // const isValidConfirmPassword =
-  //   confirmpassword === password &&
-  //   confirmpassword.length !== 0 &&
-  //   password.length !== 0;
-  // // 비밀번호 확인값도 같은지 확인
-  // const isValidInput =
-  //   username.length >= 1 &&
-  //   email.length >= 1 &&
-  //   mobile.length >= 1 &&
-  //   password.length >= 1 &&
-  //   confirmpassword.length >= 1;
-  // // 모든 칸에 한자 이상 적었을 때
-  // const getIsActive =
-  //   isValidEmail &&
-  //   isValidPassword &&
-  //   isValidInput &&
-  //   isValidConfirmPassword === true;
-  // // 검사한 모든 로직이 true 일때, 버튼을 활성화 시킬 것
+  const isValidEmail = email.includes('@') && email.includes('.');
+  // email 검사 : @ 와 . 포함 될 것
+  const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+  // 비밀번호 특수문자 확인을 위한 정규식 표현
+  const isValidPassword = password.length >= 4 && specialLetter >= 1;
+  // 특수문자 1자 이상, 전체 8자 이상
+  const isValidConfirmPassword =
+    confirmpassword === password &&
+    confirmpassword.length !== 0 &&
+    password.length !== 0;
+  // 비밀번호 확인값도 같은지 확인
+  const isValidInput =
+    username.length >= 1 &&
+    email.length >= 1 &&
+    mobile.length >= 1 &&
+    password.length >= 1 &&
+    confirmpassword.length >= 1;
+  // 모든 칸에 한자 이상 적었을 때
+  const getIsActive =
+    isValidEmail &&
+    isValidPassword &&
+    isValidInput &&
+    isValidConfirmPassword === true;
+  // 검사한 모든 로직이 true 일때, 버튼을 활성화 시킬 것
 
   const handleInput = event => {
     const { name, value } = event.target;
@@ -60,38 +65,36 @@ const SignUpPage = () => {
 
     // 값이 저장되는 로직
 
-    // if (isValidEmail) {
-    //   setEmailMessage('올바른 이메일 입니다');
-    // } else {
-    //   setEmailMessage(`Email은 '@'와 '.'이 필요합니다`);
-    // }
+    if (isValidEmail) {
+      setEmailMessage('올바른 이메일 입니다');
+    } else {
+      setEmailMessage(`Email은 '@'와 '.'이 필요합니다`);
+    }
 
-    // if (isValidPassword) {
-    //   setPasswordMessage('올바른 비밀번호 입니다');
-    // } else {
-    //   setPasswordMessage(
-    //     '비밀번호는 특수문자를 포함한 8자 이상으로 작성해 주셔야 합니다',
-    //   );
-    // }
+    if (isValidPassword) {
+      setPasswordMessage('올바른 비밀번호 입니다');
+    } else {
+      setPasswordMessage(
+        '비밀번호는 특수문자를 포함한 4글자 이상으로 작성해 주셔야 합니다',
+      );
+    }
 
-    // if (isValidConfirmPassword) {
-    //   setConfirmPasswordMessage('비밀번호 확인 되었습니다');
-    // } else {
-    //   setConfirmPasswordMessage('비밀번호가 일치하지 않습니다');
-    // }
+    if (isValidConfirmPassword) {
+      setConfirmPasswordMessage('비밀번호 확인 되었습니다');
+    } else {
+      setConfirmPasswordMessage('비밀번호가 일치하지 않습니다');
+    }
   };
 
+  // setModal
+  const [openModal, setOpenModal] = useState(false);
+
+  // 모달 열고닫는 버튼
   const handleButtonValid = () => {
-    // if (!isValidInput) {
-    //   alert('빈칸을 채워주세요');
-    // } else if (!isValidEmail) {
-    //   alert('email에는 @와 . 이 포함되어야 합니다');
-    // } else if (!isValidPassword) {
-    //   alert('비밀번호는 숫자8자리 이상이어야 합니다');
-    // } else if (!isValidConfirmPassword) {
-    //   alert('비밀번호가 서로 같은지 확인해주세요');
-    // } else {
-    // post 요청
+    setOpenModal(true);
+  };
+  // post 요청 함수 === submit버튼
+  const handleAxios = () => {
     const data = {
       username: username,
       password: password,
@@ -109,57 +112,73 @@ const SignUpPage = () => {
       },
     })
       .then(res => {
-        console.log(res.data);
+        // console.log(res);
+        navigate('/main');
       })
       .catch(err => {
         if (err.message === 'Request failed with status code 409') {
-          alert('폰넘버는 숫자로만 주세요');
         }
       });
-    // }
   };
 
   return (
     <Fragment>
       <div className="top">
+        {openModal && (
+          <Modal
+            className="Modal"
+            closeModal={setOpenModal}
+            handleAxios={handleAxios}
+            emailMessage={emailMessage}
+            passwordMessage={passwordMessage}
+            confirmPasswordMessage={confirmPasswordMessage}
+          />
+        )}
+        {/* openModal === true 일 때 띄우기 */}
+        {/* handleAxios 요청 보내기 */}
         <h1>회원가입 페이지 입니다</h1>
         {/* input type text or textarea */}
         <form name="all" className="signUpInput">
           <div className="inputMessage">User Name *</div>
-          <input type="text" name="username" onChange={handleInput}></input>
-          <div className="inputMessage">Email *</div>
-          <input type="text" name="email" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            // className={isValidEmail ? 'successMessage' : 'failMessage'}
-          >
-            {emailMessage}
-          </div>
-          <div className="inputMessage">Mobile *</div>
-          <input type="text" name="mobile" onChange={handleInput}></input>
-          <div className="inputMessage">Password *</div>
-          <input type="text" name="password" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            // className={isValidPassword ? 'successMessage' : 'failMessage'}
-          >
-            {passwordMessage}
-          </div>
-          <div className="inputMessage">Confirm Password *</div>
           <input
             type="text"
-            name="confirmpassword"
+            name="username"
+            onBlur={handleInput}
             onChange={handleInput}
           ></input>
-          <div
+          <div className="inputMessage">Email *</div>
+          <input
+            type="text"
+            name="email"
+            onBlur={handleInput}
             onChange={handleInput}
-            // className={isValidConfirmPassword ? 'successMessage' : 'failMessage'}
-          >
-            {confirmPasswordMessage}
-          </div>
+          ></input>
+          <div className="inputMessage">Mobile *</div>
+          <input
+            type="text"
+            name="mobile"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Password *</div>
+          <input
+            type="password"
+            name="password"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Confirm Password *</div>
+          <input
+            type="password"
+            name="confirmpassword"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
         </form>
         <button
-          // className={getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'}
+          className={
+            getIsActive ? 'signUpButtonAction' : 'signUpButtonInaction'
+          }
           type="button"
           name="submit"
           onClick={handleButtonValid}
@@ -170,5 +189,4 @@ const SignUpPage = () => {
     </Fragment>
   );
 };
-
 export default SignUpPage;
