@@ -2,10 +2,13 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import logo from '../peanuts.png';
+import Signup from './Signup';
+import Modal from '../Components/Modals/Modalsignup';
 
 export default function Login({ handleLoginSuccess }) {
+  const navigate = useNavigate();
   // props required w/ server
   // props에 setToken || handleLoginSuccess를 전달받아 로그인 함수에 전달.
   const style1 = {
@@ -13,6 +16,8 @@ export default function Login({ handleLoginSuccess }) {
     width: '100px',
     borderRadius: '100px',
   };
+  const swi = false;
+  const [issign, setSign] = useState(swi);
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
@@ -43,6 +48,7 @@ export default function Login({ handleLoginSuccess }) {
         .then(data => {
           //console.log(data) 유저 정보 들어온다
           handleLoginSuccess(data);
+          navigate('/main');
         });
       // 디비 조회못하고 메인으로 리디렉션중
     }
@@ -50,43 +56,36 @@ export default function Login({ handleLoginSuccess }) {
 
   return (
     <div>
-      <img src={logo} style={style1} />
-      <br />
-      <form onSubmit={e => e.preventDefault()}>
-        <span>이메일</span>
-        <input
-          className="userEmail"
-          placeholder="please write your email"
-          onChange={handleInputValue('email')}
-        ></input>
-        <br />
-        <br />
-        <span>비밀번호</span>
-        <input
-          className="pwd"
-          type="password"
-          placeholder="비밀번호"
-          onChange={handleInputValue('password')}
-        ></input>
-        <br />
-        <br />
-        <Link to="/main">
-          {/* 임시로 써놓음 */}
+      <div>
+        <img src={logo} style={style1} />
+        <form onSubmit={e => e.preventDefault()}>
+          <span>이메일</span>
+          <input
+            className="userEmail"
+            placeholder="please write your email"
+            onChange={handleInputValue('email')}
+          ></input>
+          <br />
+          <br />
+          <span>비밀번호</span>
+          <input
+            className="pwd"
+            type="password"
+            placeholder="비밀번호"
+            onChange={handleInputValue('password')}
+          ></input>
+          <br />
+          <br />
           <button className="btn-login" type="submit" onClick={handleLogin}>
             로그인
           </button>
-        </Link>
-      </form>
-
-      <br />
-      <div className="error-box">{errorMsg}</div>
-      <br />
-      <button className="google-login">Google Login</button>
-      <br />
-      <br />
-      <Link to="/Signup">
-        <button className="btn-signup">회원가입</button>
-      </Link>
+          <br />
+        </form>
+        <div className="error-box">{errorMsg}</div>
+        {/* <button className="btn-signup" onClick={handleSign}>
+          회원가입
+        </button> */}
+      </div>
     </div>
   );
 }
