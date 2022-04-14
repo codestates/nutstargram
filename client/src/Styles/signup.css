@@ -101,3 +101,7 @@ form[name='all']{
   color: #333333;
   text-align: center;
 }
+
+div[name='top']{
+  z-index: 20;
+}

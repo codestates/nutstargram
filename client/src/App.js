@@ -29,7 +29,7 @@ function App() {
     axios.post('http://localhost:4000/logout').then(res => {
       setUserinfo(null);
       setLogin(false);
-      navigate('/login'); // '/login' 페이지로 이동시켜야한다.
+      navigate('/'); // '/login' 페이지로 이동시켜야한다.
     });
   };
   // console.log(userinfo.id); // 숫자 찍힘
@@ -81,23 +81,26 @@ function App() {
       <NavBar handleLogout={handleLogout} />
 
       {!islogin ? (
-        <Login handleLoginSuccess={handleLoginSuccess} />
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/"
+            element={<Login handleLoginSuccess={handleLoginSuccess} />}
+          />
+        </Routes>
       ) : (
         <Routes>
           <Route
             path="/main"
             element={<Main content={content} userinfo={userinfo} />}
           />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route path="/" element={<Login />} />
           <Route path="/writePage" element={<Write userinfo={userinfo} />} />
           <Route path="/mypage" element={<Mypage userinfo={userinfo} />} />
           <Route path="/edituserinfo" element={<Edituserinfo />} />
         </Routes>
       )}
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
     </div>
   );
 }
