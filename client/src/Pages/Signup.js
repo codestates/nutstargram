@@ -1,9 +1,8 @@
-/* eslint-disable */
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/signup.css';
 import axios from 'axios';
-import Modal from '../Components/Modals/Modalsignup'
+import Modal from '../Components/Modals/Modalsignup';
 
 axios.defaults.withCredentials = true;
 
@@ -91,11 +90,10 @@ const SignUpPage = () => {
 
   // 모달 열고닫는 버튼
   const handleButtonValid = () => {
-    setOpenModal(true)
-  }
+    setOpenModal(true);
+  };
   // post 요청 함수 === submit버튼
   const handleAxios = () => {
-    
     const data = {
       username: username,
       password: password,
@@ -125,60 +123,61 @@ const SignUpPage = () => {
           alert('이미 존재하는 이메일 입니다');
         }
       });
-  }
-  
+  };
 
-
-return (
+  return (
     <Fragment>
       <div className="top">
-      {openModal && 
-      <Modal className="Modal" 
-      closeModal={setOpenModal} 
-      handleAxios={handleAxios} 
-      emailMessage={emailMessage} 
-      passwordMessage={passwordMessage}
-      confirmPasswordMessage={confirmPasswordMessage}
-      />}
-      {/* openModal === true 일 때 띄우기 */}
-      {/* handleAxios 요청 보내기 */}
+        {openModal && (
+          <Modal
+            className="Modal"
+            closeModal={setOpenModal}
+            handleAxios={handleAxios}
+            emailMessage={emailMessage}
+            passwordMessage={passwordMessage}
+            confirmPasswordMessage={confirmPasswordMessage}
+          />
+        )}
+        {/* openModal === true 일 때 띄우기 */}
+        {/* handleAxios 요청 보내기 */}
         <h1>회원가입 페이지 입니다</h1>
         {/* input type text or textarea */}
         <form name="all" className="signUpInput">
           <div className="inputMessage">User Name *</div>
-          <input type="text" name="username" onChange={handleInput}></input>
-          <div className="inputMessage">Email *</div>
-          <input type="text" name="email" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            className={isValidEmail ? 'successMessage' : 'failMessage'}
-          >
-            {emailMessage}
-          </div>
-          <div className="inputMessage">Mobile *</div>
-          <input type="text" name="mobile" onChange={handleInput}></input>
-          <div className="inputMessage">Password *</div>
-          <input type="text" name="password" onChange={handleInput}></input>
-          <div
-            onChange={handleInput}
-            className={isValidPassword ? 'successMessage' : 'failMessage'}
-          >
-            {passwordMessage}
-          </div>
-          <div className="inputMessage">Confirm Password *</div>
           <input
             type="text"
-            name="confirmpassword"
+            name="username"
+            onBlur={handleInput}
             onChange={handleInput}
           ></input>
-          <div
+          <div className="inputMessage">Email *</div>
+          <input
+            type="text"
+            name="email"
+            onBlur={handleInput}
             onChange={handleInput}
-            className={
-              isValidConfirmPassword ? 'successMessage' : 'failMessage'
-            }
-          >
-            {confirmPasswordMessage}
-          </div>
+          ></input>
+          <div className="inputMessage">Mobile *</div>
+          <input
+            type="text"
+            name="mobile"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Password *</div>
+          <input
+            type="password"
+            name="password"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
+          <div className="inputMessage">Confirm Password *</div>
+          <input
+            type="password"
+            name="confirmpassword"
+            onBlur={handleInput}
+            onChange={handleInput}
+          ></input>
         </form>
         <button
           className={

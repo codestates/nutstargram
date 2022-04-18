@@ -2,8 +2,10 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../peanuts.png';
+import ModalLogin from '../Components/Modals/ModalLogin';
+
 
 export default function Login({ handleLoginSuccess }) {
   // props required w/ server
@@ -13,6 +15,8 @@ export default function Login({ handleLoginSuccess }) {
     width: '100px',
     borderRadius: '100px',
   };
+  const navigate = useNavigate(); 
+
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
@@ -22,10 +26,16 @@ export default function Login({ handleLoginSuccess }) {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
     //console.log(e.target.value);
   };
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModal = () => {
+    setShowModal(false);
+  }
 
   const handleLogin = () => {
     if (loginInfo.email === '' || loginInfo === '') {
       setErrorMsg('이메일과 비밀번호를 입력하세요');
+      setShowModal(true);
     } else {
       axios
         .post(
@@ -43,6 +53,8 @@ export default function Login({ handleLoginSuccess }) {
         .then(data => {
           //console.log(data) 유저 정보 들어온다
           handleLoginSuccess(data);
+          setShowModal(false);
+          navigate('/main')
         });
       // 디비 조회못하고 메인으로 리디렉션중
     }
@@ -50,6 +62,7 @@ export default function Login({ handleLoginSuccess }) {
 
   return (
     <div>
+      {showModal && <ModalLogin handleLogin={handleLogin} closeModal={closeModal}/>}
       <img src={logo} style={style1} />
       <br />
       <form onSubmit={e => e.preventDefault()}>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import React, { useEffect, useState, Component } from 'react';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+import ModalWrite from '../Components/Modals/ModalWrite';
 
 // eslint-disable-next-line react/prop-types
-const WritePage = ({ userinfo }) => {
+const WritePage = props => {
   // Styled component
   const Container = styled.div`
     img {
@@ -13,7 +14,8 @@ const WritePage = ({ userinfo }) => {
       //object-fit: cover; 이거 쓰면 이미지 짤림
     }
   `;
-  console.log(userinfo);
+  const reProps = props;
+  console.log(reProps);
   const [contents, setContents] = useState({
     user_id: '',
     content_img: [],
@@ -27,6 +29,13 @@ const WritePage = ({ userinfo }) => {
   const [previewImg, setPreviewImg] = useState(null); // 미리보기 이미지 구현을 위한 데이터를 받을 state
 
   const [write, setWrite] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const navigate = useNavigate();
 
   const handleTextChange = e => {
     setWrite(e.target.value);
@@ -122,7 +131,8 @@ const WritePage = ({ userinfo }) => {
           }
         });
     } else {
-      alert('컨텐츠가 부족합니다!');
+      // alert('컨텐츠가 부족합니다!');
+      console.log('사진이 없어요');
     }
   };
   /* 위 함수에 body안에 write도 포함시켰기 때문에 더 이상 식을 분기하지 않아도 된다.  */
@@ -134,7 +144,7 @@ const WritePage = ({ userinfo }) => {
   //       url: 'http://localhost:4000/write',
   //       method: 'post',
   //       headers: {
-  //         'Content-type': 'application/json',
+  //         'Content-type': "multipart/form-data",
   //       },
   //       body: write,
   //     })
@@ -156,11 +166,15 @@ const WritePage = ({ userinfo }) => {
         .post(
           // 'http://ec2-3-34-190-189.ap-northeast-2.compute.amazonaws.com/write',
           'http://localhost:4000/write',
-          { content_text: write, user_id: 1, content_img: previewImg }, // formData는 객체라서 여기다 집어넣을수가 없음..
+          {
+            content_text: write,
+            user_id: reProps.id,
+            content_img: previewImg,
+          }, // formData는 객체라서 여기다 집어넣을수가 없음..
           {
             headers: {
               'Content-type': 'application/json',
-              withCredentials: true,
+              // withCredentials: true,
             },
           },
         )
@@ -168,29 +182,34 @@ const WritePage = ({ userinfo }) => {
         .then(res => {
           if (res.message === 'ok') {
             console.log('텍스트 내용 전송이 성공적으로 전달되었습니다.');
-            Navigate('/main');
+            setShowModal(false);
+            navigate('/main');
           }
         });
+      // axios.post( 'http://localhost:4000/write'), {email: userinfo.email};
     } else {
-      alert('not enough text');
+      setShowModal(true);
     }
   };
 
-  axios
-    .post
-    // 서버에 업로드하는 파일들을 보내줘야한다.
-    // 'http://localhost:4000/write',
-    // {
-    //   email: loginInfo.email,
-    //   password: loginInfo.password,
-    // },
-    // {
-    //   headers: { 'Content-Type': 'application/json' },
-    //   withCredentials: true,
-    // },
-    ();
+  // axios
+  //   .post
+  // 서버에 업로드하는 파일들을 보내줘야한다.
+  // 'http://localhost:4000/write',
+  // {
+  //   email: loginInfo.email,
+  //   password: loginInfo.password,
+  // },
+  // {
+  //   headers: { 'Content-Type': 'application/json' },
+  //   withCredentials: true,
+  // },
+  //   ();
   return (
     <div>
+      {showModal && (
+        <ModalWrite sendContent={sendContent} closeModal={closeModal} />
+      )}
       <h2>일기 작성 페이지</h2>
       <Link to="/main">
         <button>뒤로가기</button>
@@ -219,11 +238,13 @@ const WritePage = ({ userinfo }) => {
           />
         </Container>
       </div>
-      <textarea
-        className="write"
-        type="text"
-        onChange={handleTextChange}
-      ></textarea>
+      <div className="t-a">
+        <Textarea
+          type="text"
+          onChange={handleTextChange}
+          placeholder="오늘의 기분"
+        ></Textarea>
+      </div>
       <br />
       <button className="btn-post" onClick={sendContent}>
         일기 작성
@@ -232,3 +253,15 @@ const WritePage = ({ userinfo }) => {
   );
 };
 export default WritePage;
+
+const Container = styled.div`
+  img {
+    width: 200px;
+    height: 200px;
+    //object-fit: cover; 이거 쓰면 이미지 짤림
+  }
+`;
+const Textarea = styled.textarea`
+  width: 40%;
+  height: 30%;
+`;
